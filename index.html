@@ -632,25 +632,143 @@
     margin-bottom: 0.6rem;
   }
 
-  @media (max-width: 520px) {
-    .amav-tithi-row { grid-template-columns: 1fr; }
-    .amav-sky-grid  { grid-template-columns: repeat(2, 1fr); }
-    .amav-card      { padding: 1.25rem; }
+  /* ── Panchang Section ── */
+  :root { --accent-panch: #6dbf9e; --border-panch: rgba(109,191,158,0.25); }
 
-    /* Kaal mobile fixes */
+  .panchang-section { margin-top: 0; }
+
+  .panchang-div::before, .panchang-div::after {
+    background: linear-gradient(90deg, transparent, var(--border-panch), transparent) !important;
+  }
+
+  input[type="date"]#panch-date {
+    border-color: var(--border-panch);
+  }
+  input[type="date"]#panch-date:hover,
+  input[type="date"]#panch-date:focus {
+    border-color: var(--accent-panch);
+  }
+  input[type="date"]#panch-date::-webkit-calendar-picker-indicator {
+    filter: invert(0.6) sepia(1) saturate(2) hue-rotate(100deg);
+  }
+
+  .panch-card {
+    background: #0e1a16;
+    border: 1px solid var(--border-panch);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .panch-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-panch), transparent);
+  }
+  .corner.panch-c { border-color: var(--accent-panch); }
+  .panch-ring { border-top-color: var(--accent-panch) !important; }
+
+  /* Panchang rows */
+  .panch-rows { display: flex; flex-direction: column; gap: 0; }
+
+  .panch-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border-panch);
+    min-height: 44px;
+  }
+  .panch-row:last-child { border-bottom: none; }
+
+  .panch-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-panch);
+    padding: 0.75rem 1rem 0.75rem 0;
+    display: flex;
+    align-items: flex-start;
+    border-right: 1px solid var(--border-panch);
+    flex-shrink: 0;
+  }
+
+  .panch-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0.6rem 0 0.6rem 1rem;
+  }
+
+  .panch-value .panch-sub {
+    display: block;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 200;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Tags for festivals/auspicious */
+  .panch-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0.6rem 0 0.6rem 1rem;
+    align-items: center;
+  }
+  .panch-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 2px;
+    border: 1px solid var(--border-panch);
+    color: var(--text);
+    background: rgba(109,191,158,0.07);
+  }
+  .panch-tag.plain {
+    border-color: rgba(138,155,184,0.25);
+    background: transparent;
+    color: var(--text);
+  }
+  .panch-tag.inauspicious {
+    border-color: rgba(224,123,123,0.3);
+    background: rgba(224,123,123,0.06);
+    color: #e8a8a8;
+  }
+  .panch-tag.auspicious {
+    border-color: rgba(201,169,110,0.3);
+    background: rgba(201,169,110,0.06);
+    color: var(--accent);
+  }
+
+  @media (max-width: 520px) {
+    .panch-card   { padding: 1rem; }
+    .panch-row    { grid-template-columns: 110px 1fr; }
+    .panch-label  { font-size: 0.55rem; letter-spacing: 0.1em; padding-right: 0.5rem; }
+    .panch-value  { font-size: 0.9rem; padding-left: 0.75rem; }
+    .panch-tags   { padding-left: 0.75rem; }
+
+    /* Kaal mobile */
     .kaal-card      { padding: 1rem; }
     .kaal-grid      { grid-template-columns: 1fr; gap: 0.75rem; }
     .kaal-item      { padding: 1rem; }
     .time-badge     { font-size: 0.65rem; padding: 3px 7px; letter-spacing: 0; }
     .kaal-name      { letter-spacing: 0.15em; }
 
-    /* Horoscope card */
+    /* Amav / horoscope */
+    .amav-tithi-row { grid-template-columns: 1fr; }
+    .amav-sky-grid  { grid-template-columns: repeat(2, 1fr); }
+    .amav-card      { padding: 1.25rem; }
     .horoscope-card { padding: 1.25rem; }
-
-    /* Container padding */
     .container      { padding: 2rem 1rem 4rem; }
-
-    /* Sun bar stack on mobile */
     .sun-bar        { flex-direction: column; }
     .sun-divider    { width: 80%; height: 1px; }
   }
@@ -691,40 +809,26 @@
     </div>
   </div>
 
-  <div class="divider blue" style="margin-top:2rem;"><span class="divider-star" style="color:var(--accent2)">✦</span></div>
+  <!-- Panchang Section -->
+  <div class="panchang-section">
+    <div class="divider panchang-div"><span class="divider-star" style="color:var(--accent-panch)">✦</span></div>
 
-  <!-- Amavasya Section -->
-  <div class="amav-section" style="margin-top:0;">
     <div class="kaal-header-row">
-      <div class="section-label" style="margin-bottom:0;">🌑 Amavasya &middot; Bengaluru</div>
-      <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
-        <div class="dropdown-wrapper amav-sel">
-          <select id="amav-month" onchange="loadAmavasya()">
-            <option value="1">January</option><option value="2">February</option>
-            <option value="3">March</option><option value="4">April</option>
-            <option value="5">May</option><option value="6">June</option>
-            <option value="7">July</option><option value="8">August</option>
-            <option value="9">September</option><option value="10">October</option>
-            <option value="11">November</option><option value="12">December</option>
-          </select>
-        </div>
-        <div class="dropdown-wrapper amav-sel">
-          <select id="amav-year" onchange="loadAmavasya()"></select>
-        </div>
-      </div>
+      <div class="section-label" style="margin-bottom:0;">📅 Day Panchang &middot; Bengaluru</div>
+      <input type="date" id="panch-date" onchange="loadPanchang()" />
     </div>
 
-    <div class="amav-card">
-      <div class="corner amav-c tl"></div><div class="corner amav-c tr"></div>
-      <div class="corner amav-c bl"></div><div class="corner amav-c br"></div>
+    <div class="panch-card">
+      <div class="corner panch-c tl"></div><div class="corner panch-c tr"></div>
+      <div class="corner panch-c bl"></div><div class="corner panch-c br"></div>
 
-      <div class="loader-wrap" id="amav-loader">
-        <div class="loader-ring amav-ring"></div>
-        <div class="loader-text">Consulting the lunar calendar&hellip;</div>
+      <div class="loader-wrap" id="panch-loader">
+        <div class="loader-ring panch-ring"></div>
+        <div class="loader-text">Reading the panchang&hellip;</div>
       </div>
-      <div id="amav-content" style="display:none;"></div>
-      <div class="err-box" id="amav-error">
-        <p id="amav-error-msg">Unable to fetch Amavasya timings.</p>
+      <div id="panch-content" style="display:none;"></div>
+      <div class="err-box" id="panch-error">
+        <p id="panch-error-msg">Unable to fetch panchang.</p>
       </div>
     </div>
   </div>
@@ -772,6 +876,44 @@
     <div id="horoscope-text"></div>
     <div class="err-box" id="h-error">
       <p id="h-error-msg">Unable to fetch horoscope. Please try again.</p>
+    </div>
+  </div>
+
+  <div class="divider blue" style="margin-top:2rem;"><span class="divider-star" style="color:var(--accent2)">✦</span></div>
+
+  <!-- Amavasya Section -->
+  <div class="amav-section" style="margin-top:0;">
+    <div class="kaal-header-row">
+      <div class="section-label" style="margin-bottom:0;">🌑 Amavasya &middot; Bengaluru</div>
+      <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+        <div class="dropdown-wrapper amav-sel">
+          <select id="amav-month" onchange="loadAmavasya()">
+            <option value="1">January</option><option value="2">February</option>
+            <option value="3">March</option><option value="4">April</option>
+            <option value="5">May</option><option value="6">June</option>
+            <option value="7">July</option><option value="8">August</option>
+            <option value="9">September</option><option value="10">October</option>
+            <option value="11">November</option><option value="12">December</option>
+          </select>
+        </div>
+        <div class="dropdown-wrapper amav-sel">
+          <select id="amav-year" onchange="loadAmavasya()"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="amav-card">
+      <div class="corner amav-c tl"></div><div class="corner amav-c tr"></div>
+      <div class="corner amav-c bl"></div><div class="corner amav-c br"></div>
+
+      <div class="loader-wrap" id="amav-loader">
+        <div class="loader-ring amav-ring"></div>
+        <div class="loader-text">Consulting the lunar calendar&hellip;</div>
+      </div>
+      <div id="amav-content" style="display:none;"></div>
+      <div class="err-box" id="amav-error">
+        <p id="amav-error-msg">Unable to fetch Amavasya timings.</p>
+      </div>
     </div>
   </div>
 
@@ -1139,6 +1281,145 @@
   // Auto-load on page open
   loadAmavasya();
 
+  // ── Panchang ───────────────────────────────
+
+  const MONTH_NAMES = ['january','february','march','april','may','june',
+                       'july','august','september','october','november','december'];
+
+  // Set panchang date input to today
+  document.getElementById('panch-date').value = todayStr;
+
+  function buildPanchangUrl(dateVal) {
+    const [y, m, d] = dateVal.split('-');
+    const monthName = MONTH_NAMES[parseInt(m) - 1];
+    return `https://www.prokerala.com/astrology/panchang/${y}-${monthName}-${d}.html?loc=1277333`;
+  }
+
+  async function loadPanchang() {
+    const dateVal = document.getElementById('panch-date').value;
+    if (!dateVal) return;
+
+    document.getElementById('panch-content').style.display = 'none';
+    document.getElementById('panch-error').style.display   = 'none';
+    document.getElementById('panch-loader').style.display  = 'block';
+
+    const targetUrl = buildPanchangUrl(dateVal);
+    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+
+    try {
+      const res      = await fetch(proxyUrl);
+      const htmlText = await res.text();
+      const doc      = new DOMParser().parseFromString(htmlText, 'text/html');
+
+      const wrapper = doc.querySelector('.panchang-box-wrapper');
+      if (!wrapper) throw new Error('Panchang data not found');
+
+      // Helper: extract <ol> items from a data block by its class
+      function getBlock(cls) {
+        return wrapper.querySelector(`.panchang-data-${cls}`);
+      }
+
+      function parseItems(block) {
+        if (!block) return [];
+        return [...block.querySelectorAll('li')].map(li => {
+          const bold = li.querySelector('span.b, strong');
+          const rest = [...li.querySelectorAll('span')].filter(s => !s.classList.contains('b'));
+          const label = bold ? bold.textContent.replace(/\s+/g, ' ').trim() : '';
+          const value = rest.map(s => s.textContent.replace(/\s+/g, ' ').trim()).join(' ').trim();
+          if (label && value) return `${label} · ${value}`;
+          return (label || value).trim();
+        }).filter(Boolean);
+      }
+
+      function parseSimpleItems(block) {
+        if (!block) return [];
+        return [...block.querySelectorAll('li')].map(li => li.textContent.replace(/\s+/g, ' ').trim()).filter(Boolean);
+      }
+
+      const FIELDS = [
+        {
+          cls: 'tithi', label: 'Tithi', type: 'tags', tagClass: 'plain',
+          items: parseItems(getBlock('tithi'))
+        },
+        {
+          cls: 'nakshatra', label: 'Nakshatra', type: 'tags', tagClass: 'plain',
+          items: parseItems(getBlock('nakshatra'))
+        },
+        {
+          cls: 'festivals', label: 'Festivals & Vrats', type: 'tags', tagClass: '',
+          items: parseSimpleItems(getBlock('festivals'))
+        },
+        {
+          cls: 'auspicious-period', label: 'Auspicious Period', type: 'tags', tagClass: 'auspicious',
+          items: parseItems(getBlock('auspicious-period'))
+        },
+        {
+          cls: 'inauspicious-period', label: 'Inauspicious Period', type: 'tags', tagClass: 'inauspicious',
+          items: parseItems(getBlock('inauspicious-period'))
+        },
+      ];
+
+      document.getElementById('panch-loader').style.display = 'none';
+
+      if (FIELDS.every(f => !f.items.length)) throw new Error('Could not parse panchang fields');
+
+      const rows = document.createElement('div');
+      rows.className = 'panch-rows fade-in';
+
+      FIELDS.forEach(f => {
+        if (!f.items.length) return;
+
+        const row = document.createElement('div');
+        row.className = 'panch-row';
+
+        const labelEl = document.createElement('div');
+        labelEl.className = 'panch-label';
+        labelEl.textContent = f.label;
+
+        const valueEl = document.createElement('div');
+
+        if (f.type === 'tags') {
+          valueEl.className = 'panch-tags';
+          f.items.forEach(item => {
+            const tag = document.createElement('span');
+            tag.className = 'panch-tag' + (f.tagClass ? ` ${f.tagClass}` : '');
+            tag.textContent = item;
+            valueEl.appendChild(tag);
+          });
+        } else {
+          valueEl.className = 'panch-value';
+          f.items.forEach((item, i) => {
+            if (i === 0) {
+              valueEl.appendChild(document.createTextNode(item));
+            } else {
+              const sub = document.createElement('span');
+              sub.className = 'panch-sub';
+              sub.textContent = item;
+              valueEl.appendChild(sub);
+            }
+          });
+        }
+
+        row.appendChild(labelEl);
+        row.appendChild(valueEl);
+        rows.appendChild(row);
+      });
+
+      const contentEl = document.getElementById('panch-content');
+      contentEl.innerHTML = '';
+      contentEl.appendChild(rows);
+      contentEl.style.display = 'block';
+
+    } catch (err) {
+      console.error(err);
+      document.getElementById('panch-loader').style.display = 'none';
+      document.getElementById('panch-error-msg').textContent = `Error: ${err.message}`;
+      document.getElementById('panch-error').style.display = 'block';
+    }
+  }
+
+  // Auto-load panchang and kaal for today on page open
+  loadPanchang();
   // Auto-load kaal for today on page open
   loadKaal();
 </script>
