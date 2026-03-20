@@ -346,7 +346,7 @@
 
   .kaal-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
   }
 
@@ -411,15 +411,18 @@
   .time-badge {
     display: inline-block;
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 300;
-    letter-spacing: 0.05em;
-    padding: 3px 9px;
+    letter-spacing: 0.03em;
+    padding: 3px 6px;
     border-radius: 2px;
     border: 1px solid rgba(126,159,212,0.3);
     color: var(--text);
     background: rgba(126,159,212,0.08);
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 
   .kaal-item.active .time-badge {
@@ -633,6 +636,23 @@
     .amav-tithi-row { grid-template-columns: 1fr; }
     .amav-sky-grid  { grid-template-columns: repeat(2, 1fr); }
     .amav-card      { padding: 1.25rem; }
+
+    /* Kaal mobile fixes */
+    .kaal-card      { padding: 1rem; }
+    .kaal-grid      { grid-template-columns: 1fr; gap: 0.75rem; }
+    .kaal-item      { padding: 1rem; }
+    .time-badge     { font-size: 0.65rem; padding: 3px 7px; letter-spacing: 0; }
+    .kaal-name      { letter-spacing: 0.15em; }
+
+    /* Horoscope card */
+    .horoscope-card { padding: 1.25rem; }
+
+    /* Container padding */
+    .container      { padding: 2rem 1rem 4rem; }
+
+    /* Sun bar stack on mobile */
+    .sun-bar        { flex-direction: column; }
+    .sun-divider    { width: 80%; height: 1px; }
   }
 </style>
 </head>
