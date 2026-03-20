@@ -170,6 +170,7 @@
     cursor: pointer;
     outline: none;
     transition: border-color 0.3s ease;
+    max-width: 100%;
   }
   input[type="date"]:hover, input[type="date"]:focus { border-color: var(--accent2); }
   input[type="date"]::-webkit-calendar-picker-indicator {
@@ -1093,8 +1094,91 @@
   }
   .zcomp-caption p:last-child { margin-bottom: 0; }
 
-  @media (max-width: 520px) {
-    .zcomp-card { padding: 1.25rem; }
+  @media (max-width: 560px) {
+
+    /* Global */
+    .container { padding: 1.5rem 1rem 3rem; }
+
+    h1 { font-size: 1.8rem; }
+
+    /* Inputs & selects full width */
+    select { min-width: 0; width: 100%; }
+    input[type="date"] { width: 100%; }
+
+    /* Header rows stack vertically */
+    .kaal-header-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .kaal-header-row input[type="date"],
+    .kaal-header-row .dropdown-wrapper,
+    .kaal-header-row > div { width: 100%; }
+
+    /* Section labels */
+    .section-label { letter-spacing: 0.2em; }
+
+    /* Cards */
+    .kaal-card, .panch-card, .amav-card,
+    .horoscope-card, .love-card, .zcomp-card { padding: 1.1rem; }
+
+    /* Kaal grid — single column */
+    .kaal-grid {
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+    .kaal-item { padding: 0.9rem 0.75rem; }
+    .kaal-name { letter-spacing: 0.1em; font-size: 0.58rem; }
+    .time-badge { font-size: 0.62rem; padding: 2px 6px; letter-spacing: 0; }
+    .time-arrow { font-size: 0.6rem; }
+
+    /* Sun bar stacks */
+    .sun-bar { flex-direction: column; }
+    .sun-divider { width: 80%; height: 1px; }
+
+    /* Panchang */
+    .panch-row { grid-template-columns: 100px 1fr; }
+    .panch-label { font-size: 0.52rem; letter-spacing: 0.08em; padding-right: 0.4rem; }
+    .panch-value { font-size: 0.88rem; padding-left: 0.65rem; }
+    .panch-tags { padding-left: 0.65rem; gap: 4px; }
+    .panch-tag { font-size: 0.56rem; padding: 2px 7px; }
+
+    /* Amavasya */
+    .amav-tithi-row { grid-template-columns: 1fr; }
+    .amav-sky-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+    .amav-sky-item { padding: 0.6rem 0.4rem; }
+
+    /* Horoscope sign selector */
+    .selector-wrap { gap: 0.5rem; }
+    .sign-symbol-display { font-size: 1.8rem; }
+
+    /* Love meter & zodiac compat form */
+    .love-form {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+    .love-input-group { max-width: 100%; }
+    .love-heart-mid { margin: 0; align-self: center; font-size: 1.4rem; }
+    .love-input { font-size: 0.95rem; }
+
+    /* Love result */
+    .love-meter-bar-wrap { flex-direction: column; align-items: center; }
+    .love-quote-text {
+      text-align: center;
+      border-left: none;
+      border-top: 1px solid var(--border-love);
+      padding-left: 0;
+      padding-top: 0.75rem;
+      max-width: 100%;
+    }
+
+    /* Zodiac compat */
+    .zcomp-partners-row { gap: 0.75rem; }
+    .zcomp-pct-row { flex-direction: column; align-items: center; }
+    .amav-sel select { min-width: 0; }
+
+    /* Dividers tighter */
+    .divider { margin: 1rem 0; }
   }
 </style>
 </head>
