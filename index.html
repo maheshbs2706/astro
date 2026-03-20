@@ -749,28 +749,352 @@
     color: var(--accent);
   }
 
+  /* ── Love Meter ── */
+  :root { --accent-love: #e8799a; --border-love: rgba(232,121,154,0.25); }
+
+  .love-section { margin-top: 0; }
+  .love-div::before, .love-div::after {
+    background: linear-gradient(90deg, transparent, var(--border-love), transparent) !important;
+  }
+
+  .love-card {
+    background: #1a0f14;
+    border: 1px solid var(--border-love);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .love-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-love), transparent);
+  }
+  .corner.love-c { border-color: var(--accent-love); }
+  .love-ring { border-top-color: var(--accent-love) !important; }
+
+  .love-form {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .love-input-group {
+    flex: 1;
+    min-width: 160px;
+    max-width: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .love-input-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 200;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-love);
+  }
+
+  .love-input {
+    background: rgba(232,121,154,0.05);
+    border: 1px solid var(--border-love);
+    border-radius: 2px;
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    padding: 0.55rem 0.9rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 100%;
+  }
+  .love-input:focus { border-color: var(--accent-love); }
+  .love-input::placeholder { color: var(--muted); font-size: 0.85rem; }
+
+  .love-gender-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border-love);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .gender-opt {
+    flex: 1;
+    text-align: center;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    padding: 5px 4px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .gender-opt.active {
+    background: rgba(232,121,154,0.15);
+    color: var(--accent-love);
+  }
+  .gender-opt:hover:not(.active) { background: rgba(232,121,154,0.06); }
+
+  .love-heart-mid {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    line-height: 1;
+    align-self: center;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  .love-btn {
+    background: transparent;
+    border: 1px solid var(--border-love);
+    border-radius: 2px;
+    color: var(--accent-love);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .love-btn:hover {
+    background: rgba(232,121,154,0.1);
+    border-color: var(--accent-love);
+  }
+  .love-btn:active { transform: scale(0.97); }
+
+  /* Result */
+  .love-result-wrap {
+    margin-top: 1.75rem;
+    text-align: center;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .love-names-line {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+  .love-names-line strong { color: var(--accent-love); font-weight: 400; }
+
+  .love-meter-bar-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .love-percent-circle {
+    position: relative;
+    width: 110px; height: 110px;
+    flex-shrink: 0;
+  }
+  .love-percent-circle svg { width: 110px; height: 110px; }
+
+  .love-percent-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
+  }
+  .love-percent-num .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+  }
+  .love-percent-num .pct {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+  }
+
+  .love-quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.7;
+    text-align: left;
+    border-left: 2px solid var(--border-love);
+    padding-left: 0.9rem;
+    max-width: 300px;
+  }
+
+  /* ── Zodiac Compatibility ── */
+  :root { --accent-zcomp: #a78bdb; --border-zcomp: rgba(167,139,219,0.25); }
+
+  .zcomp-section { margin-top: 0; }
+  .zcomp-div::before, .zcomp-div::after {
+    background: linear-gradient(90deg, transparent, var(--border-zcomp), transparent) !important;
+  }
+
+  .zcomp-card {
+    background: #130f1e;
+    border: 1px solid var(--border-zcomp);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .zcomp-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-zcomp), transparent);
+  }
+  .corner.zcomp-c { border-color: var(--accent-zcomp); }
+  .zcomp-ring { border-top-color: var(--accent-zcomp) !important; }
+
+  .zcomp-input:focus { border-color: var(--accent-zcomp) !important; }
+
+  .zcomp-toggle { border-color: var(--border-zcomp) !important; }
+  .zcomp-toggle .gender-opt.active {
+    background: rgba(167,139,219,0.15) !important;
+    color: var(--accent-zcomp) !important;
+  }
+
+  .zcomp-sel { width: 100%; }
+  .zcomp-sel::after { color: var(--accent-zcomp); }
+  .zcomp-select {
+    width: 100%;
+    min-width: unset;
+    border-color: var(--border-zcomp);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: none;
+  }
+  .zcomp-select:hover, .zcomp-select:focus { border-color: var(--accent-zcomp); }
+
+  .zcomp-btn {
+    border-color: var(--border-zcomp) !important;
+    color: var(--accent-zcomp) !important;
+  }
+  .zcomp-btn:hover { background: rgba(167,139,219,0.1) !important; border-color: var(--accent-zcomp) !important; }
+
+  /* Result */
+  .zcomp-result-wrap {
+    margin-top: 1.75rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .zcomp-partners-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .zcomp-partner {
+    text-align: center;
+  }
+  .zcomp-partner-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text);
+    display: block;
+  }
+  .zcomp-partner-sign {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 200;
+    letter-spacing: 0.2em;
+    color: var(--accent-zcomp);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .zcomp-vs {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+  }
+
+  .zcomp-pct-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .zcomp-heart-wrap {
+    position: relative;
+    width: 120px; height: 120px;
+    flex-shrink: 0;
+  }
+  .zcomp-heart-wrap svg { width: 120px; height: 120px; }
+  .zcomp-heart-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    pointer-events: none;
+  }
+  .zcomp-heart-num .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+  }
+  .zcomp-heart-num .pct {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+  }
+
+  .zcomp-caption {
+    border-top: 1px solid var(--border-zcomp);
+    padding-top: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .zcomp-caption-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-zcomp);
+    margin-bottom: 0.75rem;
+  }
+  .zcomp-caption p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+  .zcomp-caption p:last-child { margin-bottom: 0; }
+
   @media (max-width: 520px) {
-    .panch-card   { padding: 1rem; }
-    .panch-row    { grid-template-columns: 110px 1fr; }
-    .panch-label  { font-size: 0.55rem; letter-spacing: 0.1em; padding-right: 0.5rem; }
-    .panch-value  { font-size: 0.9rem; padding-left: 0.75rem; }
-    .panch-tags   { padding-left: 0.75rem; }
-
-    /* Kaal mobile */
-    .kaal-card      { padding: 1rem; }
-    .kaal-grid      { grid-template-columns: 1fr; gap: 0.75rem; }
-    .kaal-item      { padding: 1rem; }
-    .time-badge     { font-size: 0.65rem; padding: 3px 7px; letter-spacing: 0; }
-    .kaal-name      { letter-spacing: 0.15em; }
-
-    /* Amav / horoscope */
-    .amav-tithi-row { grid-template-columns: 1fr; }
-    .amav-sky-grid  { grid-template-columns: repeat(2, 1fr); }
-    .amav-card      { padding: 1.25rem; }
-    .horoscope-card { padding: 1.25rem; }
-    .container      { padding: 2rem 1rem 4rem; }
-    .sun-bar        { flex-direction: column; }
-    .sun-divider    { width: 80%; height: 1px; }
+    .zcomp-card { padding: 1.25rem; }
   }
 </style>
 </head>
@@ -913,6 +1237,127 @@
       <div id="amav-content" style="display:none;"></div>
       <div class="err-box" id="amav-error">
         <p id="amav-error-msg">Unable to fetch Amavasya timings.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Love Meter Section -->
+  <div class="love-section">
+    <div class="divider love-div"><span class="divider-star" style="color:var(--accent-love)">✦</span></div>
+
+    <div class="section-label">💕 Love Meter</div>
+
+    <div class="love-card">
+      <div class="corner love-c tl"></div><div class="corner love-c tr"></div>
+      <div class="corner love-c bl"></div><div class="corner love-c br"></div>
+
+      <div class="love-form">
+        <div class="love-input-group">
+          <label class="love-input-label">Boy's Name</label>
+          <input type="text" id="love-name1" placeholder="Enter name" class="love-input" />
+          <div class="love-gender-toggle" id="gender1-toggle" data-value="male">
+            <span class="gender-opt active" data-gender="male">♂ Male</span>
+            <span class="gender-opt" data-gender="female">♀ Female</span>
+          </div>
+        </div>
+
+        <div class="love-heart-mid">💗</div>
+
+        <div class="love-input-group">
+          <label class="love-input-label">Girl's Name</label>
+          <input type="text" id="love-name2" placeholder="Enter name" class="love-input" />
+          <div class="love-gender-toggle" id="gender2-toggle" data-value="female">
+            <span class="gender-opt" data-gender="male">♂ Male</span>
+            <span class="gender-opt active" data-gender="female">♀ Female</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:1.25rem;">
+        <button class="love-btn" onclick="loadLoveMeter()">Calculate Love ♥</button>
+      </div>
+
+      <div class="loader-wrap" id="love-loader" style="display:none;">
+        <div class="loader-ring love-ring"></div>
+        <div class="loader-text">Measuring the love&hellip;</div>
+      </div>
+
+      <div id="love-result" style="display:none;"></div>
+
+      <div class="err-box" id="love-error">
+        <p id="love-error-msg">Unable to calculate love meter.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zodiac Compatibility Section -->
+  <div class="zcomp-section">
+    <div class="divider zcomp-div"><span class="divider-star" style="color:var(--accent-zcomp)">✦</span></div>
+    <div class="section-label">♾️ Zodiac Compatibility</div>
+
+    <div class="zcomp-card">
+      <div class="corner zcomp-c tl"></div><div class="corner zcomp-c tr"></div>
+      <div class="corner zcomp-c bl"></div><div class="corner zcomp-c br"></div>
+
+      <div class="love-form">
+        <!-- Person 1 -->
+        <div class="love-input-group">
+          <label class="love-input-label" style="color:var(--accent-zcomp)">Person 1 Name</label>
+          <input type="text" id="zc-name1" placeholder="Enter name" class="love-input zcomp-input" />
+          <div class="love-gender-toggle zcomp-toggle" id="zc-gender1" data-value="Male">
+            <span class="gender-opt active" data-gender="Male">♂ Male</span>
+            <span class="gender-opt" data-gender="Female">♀ Female</span>
+          </div>
+          <div class="dropdown-wrapper zcomp-sel">
+            <select id="zc-sign1" class="zcomp-select">
+              <option value="">— Zodiac Sign —</option>
+              <option value="aries">♈ Aries</option><option value="taurus">♉ Taurus</option>
+              <option value="gemini">♊ Gemini</option><option value="cancer">♋ Cancer</option>
+              <option value="leo">♌ Leo</option><option value="virgo">♍ Virgo</option>
+              <option value="libra">♎ Libra</option><option value="scorpio">♏ Scorpio</option>
+              <option value="sagittarius">♐ Sagittarius</option><option value="capricorn">♑ Capricorn</option>
+              <option value="aquarius">♒ Aquarius</option><option value="pisces">♓ Pisces</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="love-heart-mid">♾️</div>
+
+        <!-- Person 2 -->
+        <div class="love-input-group">
+          <label class="love-input-label" style="color:var(--accent-zcomp)">Person 2 Name</label>
+          <input type="text" id="zc-name2" placeholder="Enter name" class="love-input zcomp-input" />
+          <div class="love-gender-toggle zcomp-toggle" id="zc-gender2" data-value="Female">
+            <span class="gender-opt" data-gender="Male">♂ Male</span>
+            <span class="gender-opt active" data-gender="Female">♀ Female</span>
+          </div>
+          <div class="dropdown-wrapper zcomp-sel">
+            <select id="zc-sign2" class="zcomp-select">
+              <option value="">— Zodiac Sign —</option>
+              <option value="aries">♈ Aries</option><option value="taurus">♉ Taurus</option>
+              <option value="gemini">♊ Gemini</option><option value="cancer">♋ Cancer</option>
+              <option value="leo">♌ Leo</option><option value="virgo">♍ Virgo</option>
+              <option value="libra">♎ Libra</option><option value="scorpio">♏ Scorpio</option>
+              <option value="sagittarius">♐ Sagittarius</option><option value="capricorn">♑ Capricorn</option>
+              <option value="aquarius">♒ Aquarius</option><option value="pisces">♓ Pisces</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:1.25rem;">
+        <button class="love-btn zcomp-btn" onclick="loadZodiacCompat()">Check Compatibility ✦</button>
+      </div>
+
+      <div class="loader-wrap" id="zcomp-loader" style="display:none;">
+        <div class="loader-ring zcomp-ring"></div>
+        <div class="loader-text">Reading the stars&hellip;</div>
+      </div>
+
+      <div id="zcomp-result" style="display:none;"></div>
+
+      <div class="err-box" id="zcomp-error">
+        <p id="zcomp-error-msg">Unable to fetch compatibility.</p>
       </div>
     </div>
   </div>
@@ -1422,6 +1867,219 @@
   loadPanchang();
   // Auto-load kaal for today on page open
   loadKaal();
+  // ── Love Meter ─────────────────────────────
+
+  // Gender toggle
+  document.querySelectorAll('.love-gender-toggle').forEach(toggle => {
+    toggle.querySelectorAll('.gender-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        toggle.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        toggle.dataset.value = opt.dataset.gender;
+      });
+    });
+  });
+
+  async function loadLoveMeter() {
+    const name1   = document.getElementById('love-name1').value.trim();
+    const name2   = document.getElementById('love-name2').value.trim();
+    const gender1 = document.getElementById('gender1-toggle').dataset.value;
+    const gender2 = document.getElementById('gender2-toggle').dataset.value;
+
+    if (!name1 || !name2) {
+      document.getElementById('love-error-msg').textContent = 'Please enter both names.';
+      document.getElementById('love-error').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('love-result').style.display  = 'none';
+    document.getElementById('love-error').style.display   = 'none';
+    document.getElementById('love-loader').style.display  = 'block';
+
+    const targetUrl = `https://www.prokerala.com/entertainment/love-meter/?person1=${encodeURIComponent(name1)}&gender1=${gender1}&person2=${encodeURIComponent(name2)}&gender2=${gender2}&p=1`;
+    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+
+    try {
+      const res      = await fetch(proxyUrl);
+      const htmlText = await res.text();
+      const doc      = new DOMParser().parseFromString(htmlText, 'text/html');
+
+      // Get percentage from result-value or no-svg-result
+      let percent = '';
+      const resultVal = doc.getElementById('result-value');
+      if (resultVal) {
+        percent = resultVal.textContent.trim();
+      } else {
+        const noSvg = doc.querySelector('.no-svg-result span');
+        if (noSvg) percent = noSvg.textContent.trim();
+      }
+
+      // Get love quote
+      let quote = '';
+      const quoteEl = doc.querySelector('.love-quote .quote');
+      if (quoteEl) quote = quoteEl.textContent.trim().replace(/^"|"$/g, '').trim();
+
+      if (!percent) throw new Error('Could not read love percentage');
+
+      const pct = parseInt(percent);
+
+      // Color based on percentage
+      const color = pct >= 75 ? '#e8799a' : pct >= 50 ? '#c9a96e' : pct >= 25 ? '#7e9fd4' : '#8a9bb8';
+
+      // SVG donut arc
+      const r = 46;
+      const circ = 2 * Math.PI * r;
+      const dash = (pct / 100) * circ;
+
+      document.getElementById('love-loader').style.display = 'none';
+
+      const resultEl = document.getElementById('love-result');
+      resultEl.innerHTML = `
+        <div class="love-result-wrap">
+          <div class="love-names-line">
+            Percentage of love between <strong>${name1}</strong> &amp; <strong>${name2}</strong>
+          </div>
+          <div class="love-meter-bar-wrap">
+            <div class="love-percent-circle">
+              <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="55" cy="55" r="${r}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+                <circle cx="55" cy="55" r="${r}" fill="none"
+                  stroke="${color}" stroke-width="10"
+                  stroke-dasharray="${dash.toFixed(2)} ${circ.toFixed(2)}"
+                  stroke-dashoffset="${(circ * 0.25).toFixed(2)}"
+                  stroke-linecap="round"
+                  style="transition: stroke-dasharray 1s ease;"
+                />
+              </svg>
+              <div class="love-percent-num">
+                <span class="num" style="color:${color}">${pct}</span>
+                <span class="pct">%</span>
+              </div>
+            </div>
+            ${quote ? `<div class="love-quote-text">${quote}</div>` : ''}
+          </div>
+        </div>`;
+      resultEl.style.display = 'block';
+
+    } catch (err) {
+      console.error(err);
+      document.getElementById('love-loader').style.display = 'none';
+      document.getElementById('love-error-msg').textContent = `Error: ${err.message}`;
+      document.getElementById('love-error').style.display = 'block';
+    }
+  }
+
+  // Gender toggles for zodiac compat
+  document.querySelectorAll('.zcomp-toggle').forEach(toggle => {
+    toggle.querySelectorAll('.gender-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        toggle.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        toggle.dataset.value = opt.dataset.gender;
+      });
+    });
+  });
+
+  async function loadZodiacCompat() {
+    const name1   = document.getElementById('zc-name1').value.trim();
+    const name2   = document.getElementById('zc-name2').value.trim();
+    const gender1 = document.getElementById('zc-gender1').dataset.value;
+    const gender2 = document.getElementById('zc-gender2').dataset.value;
+    const sign1   = document.getElementById('zc-sign1').value;
+    const sign2   = document.getElementById('zc-sign2').value;
+
+    if (!name1 || !name2 || !sign1 || !sign2) {
+      document.getElementById('zcomp-error-msg').textContent = 'Please fill in all fields including zodiac signs.';
+      document.getElementById('zcomp-error').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('zcomp-result').style.display  = 'none';
+    document.getElementById('zcomp-error').style.display   = 'none';
+    document.getElementById('zcomp-loader').style.display  = 'block';
+
+    const targetUrl = `https://www.prokerala.com/astrology/zodiac-compatibility.php?person1=${encodeURIComponent(name1)}&gender1=${gender1}&sign1=${sign1}&person2=${encodeURIComponent(name2)}&gender2=${gender2}&sign2=${sign2}&p=1`;
+    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+
+    try {
+      const res      = await fetch(proxyUrl);
+      const htmlText = await res.text();
+      const doc      = new DOMParser().parseFromString(htmlText, 'text/html');
+
+      const resultBlock = doc.getElementById('share-result-image') || doc.querySelector('.share-result-wrapper');
+      if (!resultBlock) throw new Error('Compatibility result not found');
+
+      // Percentage — from <text> inside SVG heart
+      let percent = '';
+      const svgText = resultBlock.querySelector('text[text-anchor="middle"]');
+      if (svgText) percent = svgText.textContent.trim();
+      if (!percent) {
+        const altPct = resultBlock.querySelector('.share-result-percentage-block text');
+        if (altPct) percent = altPct.textContent.trim();
+      }
+
+      // Partner names & signs
+      const partnerEls = resultBlock.querySelectorAll('.share-result-item');
+      const partners = [...partnerEls].map(el => ({
+        name: el.querySelector('.partner-name')?.textContent.trim() || '',
+        sign: el.querySelector('.person-sign')?.textContent.trim() || '',
+      }));
+
+      // Caption title + paragraphs
+      const captionTitle = resultBlock.querySelector('.share-text')?.textContent.trim() || '';
+      const captionParas = [...resultBlock.querySelectorAll('.share-result-caption p')]
+        .map(p => p.textContent.trim()).filter(Boolean);
+
+      const pct = parseInt(percent) || 0;
+      const heartColor = pct >= 75 ? '#e8799a' : pct >= 50 ? '#c9a96e' : pct >= 25 ? '#a78bdb' : '#8a9bb8';
+
+      document.getElementById('zcomp-loader').style.display = 'none';
+
+      const partnersHTML = partners.length >= 2 ? `
+        <div class="zcomp-partners-row">
+          <div class="zcomp-partner">
+            <span class="zcomp-partner-name">${partners[0].name}</span>
+            <span class="zcomp-partner-sign">${partners[0].sign}</span>
+          </div>
+          <span class="zcomp-vs">✦</span>
+          <div class="zcomp-partner">
+            <span class="zcomp-partner-name">${partners[1].name}</span>
+            <span class="zcomp-partner-sign">${partners[1].sign}</span>
+          </div>
+        </div>` : '';
+
+      const captionHTML = (captionTitle || captionParas.length) ? `
+        <div class="zcomp-caption">
+          ${captionTitle ? `<div class="zcomp-caption-title">${captionTitle}</div>` : ''}
+          ${captionParas.map(p => `<p>${p}</p>`).join('')}
+        </div>` : '';
+
+      document.getElementById('zcomp-result').innerHTML = `
+        <div class="zcomp-result-wrap">
+          ${partnersHTML}
+          <div class="zcomp-pct-row">
+            <div class="zcomp-heart-wrap">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path fill="${heartColor}" opacity="0.25" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                <path fill="${heartColor}" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" opacity="0.9"/>
+              </svg>
+              <div class="zcomp-heart-num">
+                <span class="num">${pct}</span>
+                <span class="pct">%</span>
+              </div>
+            </div>
+          </div>
+          ${captionHTML}
+        </div>`;
+      document.getElementById('zcomp-result').style.display = 'block';
+
+    } catch (err) {
+      console.error(err);
+      document.getElementById('zcomp-loader').style.display = 'none';
+      document.getElementById('zcomp-error-msg').textContent = `Error: ${err.message}`;
+      document.getElementById('zcomp-error').style.display = 'block';
+    }
+  }
 </script>
 </body>
 </html>
