@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalaya Tasmai Namah</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0b0f1a;
+    --card: #161d2e;
+    --card2: #12192a;
+    --accent: #c9a96e;
+    --accent2: #7e9fd4;
+    --text: #e8e2d5;
+    --muted: #8a9bb8;
+    --border: rgba(201,169,110,0.2);
+    --border2: rgba(126,159,212,0.2);
+    --select-bg: #111827;
+  }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .stars {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 30%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 80% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 65%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 48% 72%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 73% 88%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 22% 22%, rgba(255,255,255,0.6) 0%, transparent 100%);
+  }
+
+  .glow {
+    position: fixed;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 70%);
+    top: -150px; left: 50%; transform: translateX(-50%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .container {
+    position: relative; z-index: 1;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .site-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .date-line {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  .selector-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    animation: fadeDown 0.9s ease 0.1s both;
+    flex-wrap: wrap;
+  }
+
+  .sign-symbol-display {
+    font-size: 2.2rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 12px rgba(201,169,110,0.5));
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(201,169,110,0.4)); }
+    50%       { filter: drop-shadow(0 0 24px rgba(201,169,110,0.75)); }
+  }
+
+  .dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown-wrapper::after {
+    content: '▾';
+    position: absolute;
+    right: 14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 0.85rem;
+    pointer-events: none;
+  }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--select-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.65rem 2.5rem 0.65rem 1.2rem;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease;
+    min-width: 200px;
+  }
+  select:hover, select:focus { border-color: var(--accent); }
+  select option { background: #111827; color: var(--text); }
+
+  input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--select-bg);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  input[type="date"]:hover, input[type="date"]:focus { border-color: var(--accent2); }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.6) sepia(1) saturate(2) hue-rotate(180deg);
+    cursor: pointer;
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .divider-star { color: var(--accent); font-size: 0.8rem; }
+
+  .divider.blue::before, .divider.blue::after {
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+  }
+
+  .section-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  /* Horoscope Card */
+  .horoscope-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .horoscope-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .corner {
+    position: absolute;
+    width: 18px; height: 18px;
+    border-style: solid;
+    opacity: 0.45;
+  }
+  .corner.gold { border-color: var(--accent); }
+  .corner.blue { border-color: var(--accent2); }
+  .corner.tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+  .corner.tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
+  .corner.bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
+  .corner.br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+
+  .card-sign-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-sign-emoji { font-size: 1.8rem; }
+  .card-sign-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .card-sign-dates {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .loader-wrap {
+    text-align: center;
+    padding: 2.5rem 0;
+  }
+  .loader-ring {
+    display: inline-block;
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 0.75rem;
+  }
+  .loader-ring.blue { border-top-color: var(--accent2); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  #horoscope-text { display: none; }
+  #horoscope-text p {
+    font-size: 1.12rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+  }
+  #horoscope-text p:last-child { margin-bottom: 0; }
+  #horoscope-text p::first-letter {
+    font-size: 2.6rem;
+    font-weight: 600;
+    float: left;
+    line-height: 0.8;
+    margin: 0.05em 0.1em 0 0;
+    color: var(--accent);
+  }
+
+  .err-box { display: none; text-align: center; padding: 1.5rem; }
+  .err-box p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: #e07b7b;
+  }
+
+  .placeholder-box { text-align: center; padding: 2.5rem 0; }
+  .placeholder-box p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Kaal Section */
+  .kaal-section { margin-top: 0; }
+
+  .kaal-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .kaal-card {
+    background: var(--card2);
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .kaal-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent2), transparent);
+  }
+
+  .kaal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .kaal-item {
+    border: 1px solid rgba(126,159,212,0.15);
+    border-radius: 2px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    position: relative;
+  }
+  .kaal-item:hover {
+    border-color: rgba(126,159,212,0.45);
+    background: rgba(126,159,212,0.05);
+  }
+
+  /* Active kaal — currently running */
+  .kaal-item.active {
+    border-color: rgba(201,169,110,0.6);
+    background: rgba(201,169,110,0.07);
+    box-shadow: 0 0 18px rgba(201,169,110,0.12);
+  }
+  .kaal-item.active .kaal-name { color: var(--accent); }
+  .kaal-item.active .kaal-icon { animation: pulse 3s ease-in-out infinite; }
+
+  .active-badge {
+    position: absolute;
+    top: -1px; right: -1px;
+    background: var(--accent);
+    color: #0b0f1a;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 0 2px 0 2px;
+  }
+
+  .kaal-icon { font-size: 1.6rem; margin-bottom: 0.5rem; line-height: 1; }
+
+  .kaal-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.6rem;
+  }
+
+  /* Time badges */
+  .kaal-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 0.2rem;
+  }
+
+  .time-badge {
+    display: inline-block;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    padding: 3px 9px;
+    border-radius: 2px;
+    border: 1px solid rgba(126,159,212,0.3);
+    color: var(--text);
+    background: rgba(126,159,212,0.08);
+    white-space: nowrap;
+  }
+
+  .kaal-item.active .time-badge {
+    border-color: rgba(201,169,110,0.4);
+    background: rgba(201,169,110,0.1);
+    color: var(--accent);
+  }
+
+  .time-arrow {
+    font-size: 0.65rem;
+    color: var(--muted);
+    line-height: 1;
+  }
+
+  .kaal-item.active .time-arrow { color: var(--accent); }
+
+  .kaal-dur {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+  .kaal-item.active .kaal-dur { color: rgba(201,169,110,0.6); }
+
+  /* Sunrise / Sunset bar */
+  .sun-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-top: 1.25rem;
+    border: 1px solid rgba(126,159,212,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .sun-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    transition: background 0.3s ease;
+  }
+  .sun-item:hover { background: rgba(126,159,212,0.06); }
+
+  .sun-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(126,159,212,0.2);
+    flex-shrink: 0;
+  }
+
+  .sun-icon { font-size: 1.2rem; line-height: 1; }
+
+  .sun-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .sun-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    animation: fadeUp 1s ease 0.5s both;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { animation: fadeUp 0.5s ease both; }
+
+  /* ── Amavasya Section ── */
+  :root { --accent-amav: #a78bdb; --border-amav: rgba(167,139,219,0.25); }
+
+  .amav-section { margin-top: 2.5rem; }
+  .amav-div::before, .amav-div::after {
+    background: linear-gradient(90deg, transparent, var(--border-amav), transparent) !important;
+  }
+
+  .amav-sel select {
+    border-color: var(--border-amav);
+    min-width: 120px;
+    font-size: 0.72rem;
+  }
+  .amav-sel select:hover, .amav-sel select:focus { border-color: var(--accent-amav); }
+  .amav-sel::after { color: var(--accent-amav); }
+
+  .amav-card {
+    background: #130f1e;
+    border: 1px solid var(--border-amav);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .amav-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-amav), transparent);
+  }
+  .corner.amav-c { border-color: var(--accent-amav); }
+
+  .amav-ring { border-top-color: var(--accent-amav) !important; }
+
+  /* Tithi timing blocks */
+  .amav-tithi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .amav-tithi-block {
+    border: 1px solid var(--border-amav);
+    border-radius: 2px;
+    padding: 0.9rem 1rem;
+    position: relative;
+  }
+  .amav-tithi-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-amav);
+    margin-bottom: 0.35rem;
+  }
+  .amav-tithi-time {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .amav-tithi-date {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Sky timings grid */
+  .amav-sky-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.65rem;
+  }
+  .amav-sky-item {
+    border: 1px solid var(--border-amav);
+    border-radius: 2px;
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
+  .amav-sky-item:hover { background: rgba(167,139,219,0.06); }
+  .amav-sky-icon { font-size: 1.3rem; margin-bottom: 0.3rem; line-height: 1; }
+  .amav-sky-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 200;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-amav);
+    margin-bottom: 0.3rem;
+  }
+  .amav-sky-time {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: 0.05em;
+  }
+
+  .amav-section-heading {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 200;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  @media (max-width: 520px) {
+    .amav-tithi-row { grid-template-columns: 1fr; }
+    .amav-sky-grid  { grid-template-columns: repeat(2, 1fr); }
+    .amav-card      { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="glow"></div>
+
+<div class="container">
+
+  <header>
+    <div class="site-label">Celestial · Daily Reading</div>
+    <h1>Kalaya Tasmai <em>Namah</em></h1>
+    <div class="date-line" id="today-date"></div>
+  </header>
+
+  <!-- Kaal Section -->
+  <div class="kaal-section" style="margin-top:0;">
+    <div class="kaal-header-row">
+      <div class="section-label" style="margin-bottom:0;">Daily kaal timings &middot; Bengaluru</div>
+      <input type="date" id="kaal-date" onchange="loadKaal()" />
+    </div>
+
+    <div class="kaal-card">
+      <div class="corner blue tl"></div><div class="corner blue tr"></div>
+      <div class="corner blue bl"></div><div class="corner blue br"></div>
+
+      <div class="loader-wrap" id="kaal-loader">
+        <div class="loader-ring blue"></div>
+        <div class="loader-text">Consulting the almanac&hellip;</div>
+      </div>
+      <div id="kaal-content" style="display:none;"></div>
+      <div class="err-box" id="kaal-error">
+        <p id="kaal-error-msg">Unable to fetch kaal timings.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider blue" style="margin-top:2rem;"><span class="divider-star" style="color:var(--accent2)">✦</span></div>
+
+  <!-- Amavasya Section -->
+  <div class="amav-section" style="margin-top:0;">
+    <div class="kaal-header-row">
+      <div class="section-label" style="margin-bottom:0;">🌑 Amavasya &middot; Bengaluru</div>
+      <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+        <div class="dropdown-wrapper amav-sel">
+          <select id="amav-month" onchange="loadAmavasya()">
+            <option value="1">January</option><option value="2">February</option>
+            <option value="3">March</option><option value="4">April</option>
+            <option value="5">May</option><option value="6">June</option>
+            <option value="7">July</option><option value="8">August</option>
+            <option value="9">September</option><option value="10">October</option>
+            <option value="11">November</option><option value="12">December</option>
+          </select>
+        </div>
+        <div class="dropdown-wrapper amav-sel">
+          <select id="amav-year" onchange="loadAmavasya()"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="amav-card">
+      <div class="corner amav-c tl"></div><div class="corner amav-c tr"></div>
+      <div class="corner amav-c bl"></div><div class="corner amav-c br"></div>
+
+      <div class="loader-wrap" id="amav-loader">
+        <div class="loader-ring amav-ring"></div>
+        <div class="loader-text">Consulting the lunar calendar&hellip;</div>
+      </div>
+      <div id="amav-content" style="display:none;"></div>
+      <div class="err-box" id="amav-error">
+        <p id="amav-error-msg">Unable to fetch Amavasya timings.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-star">✦</span></div>
+
+  <!-- Horoscope Sign Selector -->
+  <div class="selector-wrap">
+    <span class="sign-symbol-display" id="active-symbol">✦</span>
+    <div class="dropdown-wrapper">
+      <select id="sign-select" onchange="onDropdownChange(this.value)">
+        <option value="">— Select your sign —</option>
+        <option value="aries">♈  Aries</option>
+        <option value="taurus">♉  Taurus</option>
+        <option value="gemini">♊  Gemini</option>
+        <option value="cancer">♋  Cancer</option>
+        <option value="leo">♌  Leo</option>
+        <option value="virgo">♍  Virgo</option>
+        <option value="libra">♎  Libra</option>
+        <option value="scorpio">♏  Scorpio</option>
+        <option value="sagittarius">♐  Sagittarius</option>
+        <option value="capricorn">♑  Capricorn</option>
+        <option value="aquarius">♒  Aquarius</option>
+        <option value="pisces">♓  Pisces</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-star">✦</span></div>
+
+  <!-- Horoscope Card -->
+  <div class="section-label">Daily horoscope</div>
+  <div class="horoscope-card">
+    <div class="corner gold tl"></div><div class="corner gold tr"></div>
+    <div class="corner gold bl"></div><div class="corner gold br"></div>
+
+    <div class="placeholder-box" id="placeholder">
+      <p>Choose a sign to read your horoscope</p>
+    </div>
+    <div class="loader-wrap" id="loader" style="display:none;">
+      <div class="loader-ring"></div>
+      <div class="loader-text">Reading the stars&hellip;</div>
+    </div>
+    <div id="card-sign-header" class="card-sign-header" style="display:none;"></div>
+    <div id="horoscope-text"></div>
+    <div class="err-box" id="h-error">
+      <p id="h-error-msg">Unable to fetch horoscope. Please try again.</p>
+    </div>
+  </div>
+
+  <footer>
+    Source: <a href="https://www.prokerala.com" target="_blank">prokerala.com</a>
+    &nbsp;·&nbsp; Bengaluru, Karnataka, India
+  </footer>
+
+</div>
+
+<script>
+  const SIGNS = [
+    { key: 'aries',       symbol: '♈', name: 'Aries',       dates: 'Mar 21 – Apr 19' },
+    { key: 'taurus',      symbol: '♉', name: 'Taurus',      dates: 'Apr 20 – May 20' },
+    { key: 'gemini',      symbol: '♊', name: 'Gemini',      dates: 'May 21 – Jun 20' },
+    { key: 'cancer',      symbol: '♋', name: 'Cancer',      dates: 'Jun 21 – Jul 22' },
+    { key: 'leo',         symbol: '♌', name: 'Leo',         dates: 'Jul 23 – Aug 22' },
+    { key: 'virgo',       symbol: '♍', name: 'Virgo',       dates: 'Aug 23 – Sep 22' },
+    { key: 'libra',       symbol: '♎', name: 'Libra',       dates: 'Sep 23 – Oct 22' },
+    { key: 'scorpio',     symbol: '♏', name: 'Scorpio',     dates: 'Oct 23 – Nov 21' },
+    { key: 'sagittarius', symbol: '♐', name: 'Sagittarius', dates: 'Nov 22 – Dec 21' },
+    { key: 'capricorn',   symbol: '♑', name: 'Capricorn',   dates: 'Dec 22 – Jan 19' },
+    { key: 'aquarius',    symbol: '♒', name: 'Aquarius',    dates: 'Jan 20 – Feb 18' },
+    { key: 'pisces',      symbol: '♓', name: 'Pisces',      dates: 'Feb 19 – Mar 20' },
+  ];
+
+  const KAAL_KEYS = [
+    { match: 'rahu kaal',       label: 'Rahu Kaal',       icon: '🌑' },
+    { match: 'gulika kaal',     label: 'Gulika Kaal',     icon: '🌘' },
+    { match: 'yamaghanta kaal', label: 'Yamaghanta Kaal', icon: '⏳' },
+  ];
+
+  // Today
+  const today = new Date();
+  document.getElementById('today-date').textContent =
+    today.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  // Set date input to today
+  const pad = n => String(n).padStart(2, '0');
+  const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+  document.getElementById('kaal-date').value = todayStr;
+
+  // ── Horoscope ──────────────────────────────
+
+  function onDropdownChange(val) { if (val) loadSign(val); }
+
+  function loadSign(signKey) {
+    const sign = SIGNS.find(s => s.key === signKey);
+    if (!sign) return;
+
+    document.getElementById('active-symbol').textContent = sign.symbol;
+    document.getElementById('placeholder').style.display = 'none';
+    document.getElementById('h-error').style.display = 'none';
+    document.getElementById('horoscope-text').style.display = 'none';
+    document.getElementById('horoscope-text').innerHTML = '';
+    document.getElementById('card-sign-header').style.display = 'none';
+    document.getElementById('loader').style.display = 'block';
+
+    fetchHoroscope(sign);
+  }
+
+  async function fetchHoroscope(sign) {
+    const targetUrl = `https://www.prokerala.com/astrology/horoscope/?sign=${sign.key}`;
+    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    try {
+      const res      = await fetch(proxyUrl);
+      const htmlText = await res.text();
+      const doc      = new DOMParser().parseFromString(htmlText, 'text/html');
+
+      let result = '';
+      doc.querySelectorAll('h2').forEach(h2 => {
+        if (h2.textContent.toLowerCase().includes(`${sign.key} daily horoscope`)) {
+          const panel = h2.nextElementSibling;
+          if (panel && panel.classList.contains('horoscope-panel')) {
+            panel.querySelectorAll('p').forEach(p => { result += `<p>${p.textContent}</p>`; });
+          }
+        }
+      });
+
+      document.getElementById('loader').style.display = 'none';
+
+      if (result) {
+        const hdr = document.getElementById('card-sign-header');
+        hdr.innerHTML = `
+          <span class="card-sign-emoji">${sign.symbol}</span>
+          <div>
+            <div class="card-sign-name">${sign.name}</div>
+            <div class="card-sign-dates">${sign.dates}</div>
+          </div>`;
+        hdr.style.display = 'flex';
+        const el = document.getElementById('horoscope-text');
+        el.innerHTML = result;
+        el.className = 'fade-in';
+        el.style.display = 'block';
+      } else {
+        document.getElementById('h-error-msg').textContent = 'No data found for this sign.';
+        document.getElementById('h-error').style.display = 'block';
+      }
+    } catch (err) {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('h-error-msg').textContent = 'Error fetching data. Please try again.';
+      document.getElementById('h-error').style.display = 'block';
+    }
+  }
+
+  // ── Kaal Timings ───────────────────────────
+
+  async function loadKaal() {
+    const dateVal = document.getElementById('kaal-date').value;
+    if (!dateVal) return;
+
+    const [year, month, day] = dateVal.split('-');
+
+    document.getElementById('kaal-content').style.display  = 'none';
+    document.getElementById('kaal-error').style.display    = 'none';
+    document.getElementById('kaal-loader').style.display   = 'block';
+
+    const targetUrl = `https://www.prokerala.com/astrology/rahukalam/?year=${year}&month=${parseInt(month)}&day=${parseInt(day)}&location=Bengaluru%2C+Karnataka%2C+India&loc=1277333&p=1`;
+    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+
+    try {
+      const res      = await fetch(proxyUrl);
+      const htmlText = await res.text();
+      const doc      = new DOMParser().parseFromString(htmlText, 'text/html');
+
+      const ul = doc.querySelector('ul.kaal-timings-block');
+      if (!ul) throw new Error('Kaal timings block not found in response');
+
+      const kaals = {};
+      let sunrise = '', sunset = '';
+
+      ul.querySelectorAll('li').forEach(li => {
+        const nameEl = li.querySelector('span.b');
+        if (nameEl) {
+          // kaal item
+          const name  = nameEl.textContent.trim();
+          const spans = li.querySelectorAll('span');
+          // second span (index 1) has the time
+          const timeEl = spans[1];
+          const durEl  = li.querySelector('span.text-muted');
+          const time   = timeEl ? timeEl.textContent.trim() : '—';
+          const dur    = durEl  ? durEl.textContent.trim().replace(/\s+/g, ' ') : '';
+          KAAL_KEYS.forEach(k => {
+            if (name.toLowerCase().includes(k.match)) {
+              kaals[k.match] = { time, dur };
+            }
+          });
+        } else {
+          // sunrise/sunset item
+          const txt = li.textContent;
+          const srMatch = txt.match(/Sunrise\s*:\s*([\d:]+\s*[APMapm]+)/i);
+          const ssMatch = txt.match(/Sunset\s*:\s*([\d:]+\s*[APMapm]+)/i);
+          if (srMatch) sunrise = srMatch[1].trim();
+          if (ssMatch) sunset  = ssMatch[1].trim();
+        }
+      });
+
+      document.getElementById('kaal-loader').style.display = 'none';
+
+      if (Object.keys(kaals).length === 0) {
+        throw new Error('Could not parse kaal timings from the page');
+      }
+
+      // Build content
+      const wrap = document.createElement('div');
+      wrap.className = 'fade-in';
+
+      // Helper: parse "09:26 am" → minutes since midnight
+      function timeToMins(str) {
+        const m = str.trim().match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
+        if (!m) return -1;
+        let h = parseInt(m[1]), min = parseInt(m[2]);
+        const ampm = m[3].toLowerCase();
+        if (ampm === 'pm' && h !== 12) h += 12;
+        if (ampm === 'am' && h === 12) h = 0;
+        return h * 60 + min;
+      }
+
+      const now = new Date();
+      const selectedDate = document.getElementById('kaal-date').value;
+      const todayForCheck = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+      const isToday = selectedDate === todayForCheck;
+      const nowMins = now.getHours() * 60 + now.getMinutes();
+
+      // Kaal grid
+      const grid = document.createElement('div');
+      grid.className = 'kaal-grid';
+
+      KAAL_KEYS.forEach(k => {
+        const data = kaals[k.match] || { time: '—', dur: '' };
+        const parts = data.time.split(/\s+to\s+|\s{2,}/).map(s => s.trim()).filter(Boolean);
+
+        // Active check — only if viewing today
+        let isActive = false;
+        if (isToday && parts.length === 2) {
+          const startMins = timeToMins(parts[0]);
+          const endMins   = timeToMins(parts[1]);
+          if (startMins >= 0 && endMins >= 0) {
+            isActive = nowMins >= startMins && nowMins <= endMins;
+          }
+        }
+
+        const timeHTML = parts.length >= 2
+          ? `<span class="time-badge">${parts[0]}</span><span class="time-arrow">→</span><span class="time-badge">${parts[1]}</span>`
+          : `<span class="time-badge">${data.time}</span>`;
+
+        const durHTML    = data.dur ? `<div class="kaal-dur">${data.dur}</div>` : '';
+        const badgeHTML  = isActive ? `<div class="active-badge">● Live</div>` : '';
+
+        const item = document.createElement('div');
+        item.className = 'kaal-item' + (isActive ? ' active' : '');
+        item.innerHTML = `
+          ${badgeHTML}
+          <div class="kaal-icon">${k.icon}</div>
+          <div class="kaal-name">${k.label}</div>
+          <div class="kaal-time">${timeHTML}</div>
+          ${durHTML}`;
+        grid.appendChild(item);
+      });
+
+      wrap.appendChild(grid);
+
+      // Sunrise / sunset bar
+      if (sunrise || sunset) {
+        const sunBar = document.createElement('div');
+        sunBar.className = 'sun-bar';
+        sunBar.innerHTML = `
+          <div class="sun-item"><span class="sun-icon">🌅</span><span class="sun-label">Sunrise</span><span class="sun-time">${sunrise || '—'}</span></div>
+          <div class="sun-divider"></div>
+          <div class="sun-item"><span class="sun-icon">🌇</span><span class="sun-label">Sunset</span><span class="sun-time">${sunset || '—'}</span></div>`;
+        wrap.appendChild(sunBar);
+      }
+
+      const contentEl = document.getElementById('kaal-content');
+      contentEl.innerHTML = '';
+      contentEl.appendChild(wrap);
+      contentEl.style.display = 'block';
+
+    } catch (err) {
+      console.error(err);
+      document.getElementById('kaal-loader').style.display = 'none';
+      document.getElementById('kaal-error-msg').textContent = `Error: ${err.message}`;
+      document.getElementById('kaal-error').style.display = 'block';
+    }
+  }
+
+  // ── Amavasya ───────────────────────────────
+
+  // Populate year dropdown (current year ± 2)
+  (function() {
+    const sel = document.getElementById('amav-year');
+    const cy  = today.getFullYear();
+    for (let y = cy - 1; y <= cy + 2; y++) {
+      const opt = document.createElement('option');
+      opt.value = y; opt.textContent = y;
+      if (y === cy) opt.selected = true;
+      sel.appendChild(opt);
+    }
+    // Set current month
+    document.getElementById('amav-month').value = today.getMonth() + 1;
+  })();
+
+  async function loadAmavasya() {
+    const month = document.getElementById('amav-month').value;
+    const year  = document.getElementById('amav-year').value;
+    const dateStr = `${year}-${pad(month)}-01`;
+
+    document.getElementById('amav-content').style.display = 'none';
+    document.getElementById('amav-error').style.display   = 'none';
+    document.getElementById('amav-loader').style.display  = 'block';
+
+    const targetUrl = `https://www.prokerala.com/festivals/amavasya.html?date=${dateStr}&festival_pathname=amavasya&mode=festival&loc=1277333`;
+    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+
+    try {
+      const res      = await fetch(proxyUrl);
+      const htmlText = await res.text();
+
+      const doc   = new DOMParser().parseFromString(htmlText, 'text/html');
+      const block = doc.querySelector('.festival-tithi-details');
+      if (!block) throw new Error('Amavasya data block not found');
+
+      // ── Parse Tithi Start / End ──
+      const tithiStart = { time: '—', date: '' };
+      const tithiEnd   = { time: '—', date: '' };
+
+      block.querySelectorAll('p.no-margin').forEach(p => {
+        const txt = p.textContent.trim();
+        if (txt.toLowerCase().includes('start')) {
+          const m = txt.match(/:\s*(.+)/s);
+          if (m) {
+            const parts = m[1].trim().split(/\s+on\s+/i);
+            tithiStart.time = parts[0]?.trim() || '—';
+            tithiStart.date = parts[1]?.trim() || '';
+          }
+        } else if (txt.toLowerCase().includes('end')) {
+          const m = txt.match(/:\s*(.+)/s);
+          if (m) {
+            const parts = m[1].trim().split(/\s+on\s+/i);
+            tithiEnd.time = parts[0]?.trim() || '—';
+            tithiEnd.date = parts[1]?.trim() || '';
+          }
+        }
+      });
+
+      // ── Parse Sky timings (Sunrise, Sunset, Moonrise, Moonset) ──
+      const sky = { Sunrise: '—', Sunset: '—', Moonrise: '—', Moonset: '—' };
+      const skyOrder = ['Sunrise', 'Sunset', 'Moonrise', 'Moonset'];
+      const skyIcons = { Sunrise: '🌅', Sunset: '🌇', Moonrise: '🌕', Moonset: '🌑' };
+
+      // Each sky item has three spans: icon-sprite, label (d-block), time (d-block)
+      block.querySelectorAll('.grid-col-xs-3 > div > div').forEach(item => {
+        const spans = item.querySelectorAll('span.d-block');
+        if (spans.length >= 2) {
+          const label = spans[0].textContent.trim();
+          const time  = spans[1].textContent.trim();
+          if (sky.hasOwnProperty(label)) sky[label] = time;
+        }
+      });
+
+      // ── Render ──
+      document.getElementById('amav-loader').style.display = 'none';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'fade-in';
+
+      // Tithi timings
+      wrap.innerHTML = `
+        <div class="amav-section-heading">Amavasya Tithi Timings</div>
+        <div class="amav-tithi-row">
+          <div class="amav-tithi-block">
+            <div class="amav-tithi-label">🌑 Tithi Start</div>
+            <div class="amav-tithi-time">${tithiStart.time}</div>
+            ${tithiStart.date ? `<div class="amav-tithi-date">${tithiStart.date}</div>` : ''}
+          </div>
+          <div class="amav-tithi-block">
+            <div class="amav-tithi-label">🌒 Tithi End</div>
+            <div class="amav-tithi-time">${tithiEnd.time}</div>
+            ${tithiEnd.date ? `<div class="amav-tithi-date">${tithiEnd.date}</div>` : ''}
+          </div>
+        </div>
+        <div class="amav-section-heading" style="margin-top:1rem;">Sky Timings</div>
+        <div class="amav-sky-grid">
+          ${skyOrder.map(k => `
+            <div class="amav-sky-item">
+              <div class="amav-sky-icon">${skyIcons[k]}</div>
+              <div class="amav-sky-label">${k}</div>
+              <div class="amav-sky-time">${sky[k]}</div>
+            </div>`).join('')}
+        </div>`;
+
+      const contentEl = document.getElementById('amav-content');
+      contentEl.innerHTML = '';
+      contentEl.appendChild(wrap);
+      contentEl.style.display = 'block';
+
+    } catch (err) {
+      console.error(err);
+      document.getElementById('amav-loader').style.display = 'none';
+      document.getElementById('amav-error-msg').textContent = `Error: ${err.message}`;
+      document.getElementById('amav-error').style.display = 'block';
+    }
+  }
+
+  // Auto-load on page open
+  loadAmavasya();
+
+  // Auto-load kaal for today on page open
+  loadKaal();
+</script>
+</body>
+</html>
