@@ -2,20 +2,21 @@
   "name": "Kalaya Tasmai Namah",
   "short_name": "Kalaya",
   "description": "Daily Hindu astrology dashboard — Kaal, Panchang, Horoscope, Amavasya, Purnima",
-  "start_url": "/",
+  "start_url": "/astro/index.html",
+  "scope": "/astro/",
   "display": "standalone",
   "background_color": "#0b0f1a",
   "theme_color": "#c9a96e",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/astro/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "/astro/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
