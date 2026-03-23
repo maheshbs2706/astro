@@ -1294,9 +1294,32 @@
     .zcomp-pct-row { flex-direction: column; align-items: center; }
     .amav-sel select { min-width: 0; }
 
-    /* Dividers tighter */
-    .divider { margin: 1rem 0; }
+  /* ── Language Dropdown ── */
+  .lang-dropdown-wrap::after { color: var(--accent); }
+  .lang-dropdown-wrap select {
+    min-width: 130px;
+    border-color: var(--border);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: none;
   }
+  .lang-dropdown-wrap select:hover,
+  .lang-dropdown-wrap select:focus { border-color: var(--accent); }
+
+  .translating-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(11,15,26,0.75);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1rem;
+  }
+  .translating-overlay p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
 </style>
 </head>
 <body>
@@ -1310,6 +1333,12 @@
     <div class="site-label">Celestial · Daily Reading</div>
     <h1>Kalaya Tasmai <em>Namah</em></h1>
     <div class="date-line" id="today-date"></div>
+    <div class="dropdown-wrapper lang-dropdown-wrap" style="margin-top:1rem;">
+      <select id="lang-select" onchange="toggleLanguage(this.value)">
+        <option value="en">🌐 English</option>
+        <option value="kn">🌐 ಕನ್ನಡ</option>
+      </select>
+    </div>
   </header>
 
   <!-- Kaal Section -->
@@ -1674,6 +1703,7 @@
         el.innerHTML = result;
         el.className = 'fade-in';
         el.style.display = 'block';
+        autoTranslateIfKannada('horoscope-text');
       } else {
         document.getElementById('h-error-msg').textContent = 'No data found for this sign.';
         document.getElementById('h-error').style.display = 'block';
@@ -1817,6 +1847,7 @@
       contentEl.innerHTML = '';
       contentEl.appendChild(wrap);
       contentEl.style.display = 'block';
+      autoTranslateIfKannada('kaal-content');
 
     } catch (err) {
       console.error(err);
@@ -1939,6 +1970,7 @@
       contentEl.innerHTML = '';
       contentEl.appendChild(wrap);
       contentEl.style.display = 'block';
+      autoTranslateIfKannada('amav-content');
 
     } catch (err) {
       console.error(err);
@@ -2076,6 +2108,7 @@
       contentEl.innerHTML = '';
       contentEl.appendChild(rows);
       contentEl.style.display = 'block';
+      autoTranslateIfKannada('panch-content');
 
     } catch (err) {
       console.error(err);
@@ -2085,10 +2118,10 @@
     }
   }
 
-  // Auto-load panchang and kaal for today on page open
+  // Auto-load panchang, kaal and lunar for today on page open
   loadPanchang();
-  // Auto-load kaal for today on page open
   loadKaal();
+  loadLunar();
   // ── Love Meter ─────────────────────────────
 
   // Gender toggle
@@ -2182,6 +2215,7 @@
           </div>
         </div>`;
       resultEl.style.display = 'block';
+      autoTranslateIfKannada('love-result');
 
     } catch (err) {
       console.error(err);
@@ -2294,6 +2328,7 @@
           ${captionHTML}
         </div>`;
       document.getElementById('zcomp-result').style.display = 'block';
+      autoTranslateIfKannada('zcomp-result');
 
     } catch (err) {
       console.error(err);
@@ -2400,6 +2435,7 @@
       contentEl.innerHTML = '';
       contentEl.appendChild(wrap);
       contentEl.style.display = 'block';
+      autoTranslateIfKannada('purn-content');
 
     } catch (err) {
       console.error(err);
@@ -2409,8 +2445,134 @@
     }
   }
 
-  // Auto-load lunar section on page open
-  loadLunar();
+  // ── Language / Translation ─────────────────
+
+  let currentLang = 'en';
+
+  // Translate a plain text string via MyMemory (free, no key, CORS-friendly)
+  async function translateText(text, target = 'kn') {
+    if (!text || !text.trim()) return text;
+    // MyMemory has ~500 char limit — chunk if needed
+    if (text.length > 450) {
+      const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+      const chunks = [];
+      let current = '';
+      for (const s of sentences) {
+        if ((current + s).length > 450) {
+          if (current) chunks.push(current.trim());
+          current = s;
+        } else {
+          current += s;
+        }
+      }
+      if (current) chunks.push(current.trim());
+      const results = await Promise.all(chunks.map(c => translateText(c, target)));
+      return results.join(' ');
+    }
+    try {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.trim())}&langpair=en|${target}`;
+      const res  = await fetch(url);
+      const data = await res.json();
+      return data?.responseData?.translatedText || text;
+    } catch {
+      return text;
+    }
+  }
+
+  // Translate all text nodes inside an element
+  async function translateElement(el, target) {
+    if (!el) return;
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    const nodes = [];
+    let node;
+    while ((node = walker.nextNode())) {
+      const t = node.textContent.trim();
+      // Skip empty, pure numbers/symbols, time strings
+      if (t.length > 1 && !/^[\d:.,\-–%♈♉♊♋♌♍♎♏♐♑♒♓♥♗✦→●\s]+$/.test(t) && !/^\d{1,2}:\d{2}\s*(AM|PM)$/i.test(t)) {
+        nodes.push(node);
+      }
+    }
+    // Translate sequentially to avoid hammering the rate limit
+    for (const n of nodes) {
+      const original = n.textContent.trim();
+      const translated = await translateText(original, target);
+      n.textContent = translated;
+      await new Promise(r => setTimeout(r, 80)); // small delay between calls
+    }
+  }
+
+  // Show overlay
+  function showTranslatingOverlay(msg) {
+    let ov = document.getElementById('translating-overlay');
+    if (!ov) {
+      ov = document.createElement('div');
+      ov.id = 'translating-overlay';
+      ov.className = 'translating-overlay';
+      ov.innerHTML = `<div class="loader-ring" style="display:inline-block;width:44px;height:44px;border:1px solid rgba(201,169,110,0.2);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;"></div><p>${msg}</p>`;
+      document.body.appendChild(ov);
+    } else {
+      ov.querySelector('p').textContent = msg;
+      ov.style.display = 'flex';
+    }
+  }
+
+  function hideTranslatingOverlay() {
+    const ov = document.getElementById('translating-overlay');
+    if (ov) ov.style.display = 'none';
+  }
+
+  async function toggleLanguage(val) {
+    const enOpt = document.getElementById('lang-en');
+    const knOpt = document.getElementById('lang-kn');
+
+    if (val === 'kn' && currentLang === 'en') {
+      currentLang = 'kn';
+      showTranslatingOverlay('ಅನುವಾದಿಸಲಾಗುತ್ತಿದೆ…');
+
+      // All loaded content sections
+      const sectionIds = [
+        'kaal-content', 'panch-content', 'horoscope-text',
+        'amav-content', 'purn-content', 'love-result', 'zcomp-result'
+      ];
+
+      // Static label selectors
+      const staticEls = document.querySelectorAll(
+        '.section-label, .kaal-name, .active-badge, .panch-label, ' +
+        '.amav-tithi-label, .amav-section-heading, .purn-tithi-label, ' +
+        '.purn-section-heading, .amav-sky-label, .purn-sky-label, ' +
+        '.card-sign-name, .placeholder-box p, ' +
+        '.zcomp-caption-title, .lunar-card-title, .site-label, .date-line'
+      );
+
+      // Translate static labels first (quick)
+      for (const el of staticEls) {
+        await translateElement(el, 'kn');
+      }
+
+      // Then translate loaded content sections
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.style.display !== 'none') {
+          await translateElement(el, 'kn');
+        }
+      }
+
+      hideTranslatingOverlay();
+
+    } else if (val === 'en' && currentLang === 'kn') {
+      currentLang = 'en';
+      showTranslatingOverlay('Reloading…');
+      location.reload();
+    }
+  }
+
+  // After any section loads, auto-translate if Kannada mode is on
+  async function autoTranslateIfKannada(elId) {
+    if (currentLang === 'kn') {
+      const el = document.getElementById(elId);
+      if (el) await translateElement(el, 'kn');
+    }
+  }
 </script>
 </body>
 </html>
