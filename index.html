@@ -1404,8 +1404,6 @@
     </div>
   </div>
 
-  <div class="divider"><span class="divider-star">✦</span></div>
-
   <!-- Horoscope Card -->
   <div class="section-label">Daily horoscope</div>
   <div class="horoscope-card">
@@ -2455,7 +2453,9 @@
   // Register service worker for PWA
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/astro/sw.js', { scope: '/astro/' }).catch(() => {});
+      navigator.serviceWorker.register('/astro/sw.js', { scope: '/astro/' })
+        .then(r => console.log('SW registered', r.scope))
+        .catch(e => console.log('SW error', e));
     });
   }
 
