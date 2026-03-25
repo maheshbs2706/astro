@@ -1365,11 +1365,11 @@
     </div>
   </div>
 
-  <div class="divider"><span class="divider-star">✦</span></div>
+  <div class="divider"><span class="divider-star notranslate">✦</span></div>
 
   <!-- Horoscope Sign Selector -->
   <div class="selector-wrap">
-    <span class="sign-symbol-display" id="active-symbol">✦</span>
+    <span class="sign-symbol-display notranslate" id="active-symbol">✦</span>
     <div class="dropdown-wrapper">
       <select id="sign-select" onchange="onDropdownChange(this.value)">
         <option value="">— Select your sign —</option>
@@ -1487,7 +1487,7 @@
           </div>
         </div>
 
-        <div class="love-heart-mid">💗</div>
+        <div class="love-heart-mid notranslate">💗</div>
 
         <div class="love-input-group">
           <label class="love-input-label">Girl's Name</label>
@@ -1547,7 +1547,7 @@
           </div>
         </div>
 
-        <div class="love-heart-mid">♾️</div>
+        <div class="love-heart-mid notranslate">♾️</div>
 
         <!-- Person 2 -->
         <div class="love-input-group">
@@ -1799,7 +1799,7 @@
         item.className = 'kaal-item' + (isActive ? ' active' : '');
         item.innerHTML = `
           ${badgeHTML}
-          <div class="kaal-icon">${k.icon}</div>
+          <div class="kaal-icon notranslate">${k.icon}</div>
           <div class="kaal-name">${k.label}</div>
           <div class="kaal-time">${timeHTML}</div>
           ${durHTML}`;
@@ -1813,9 +1813,9 @@
         const sunBar = document.createElement('div');
         sunBar.className = 'sun-bar';
         sunBar.innerHTML = `
-          <div class="sun-item"><span class="sun-icon">🌅</span><span class="sun-label">Sunrise</span><span class="sun-time">${sunrise || '—'}</span></div>
+          <div class="sun-item"><span class="sun-icon notranslate">🌅</span><span class="sun-label">Sunrise</span><span class="sun-time">${sunrise || '—'}</span></div>
           <div class="sun-divider"></div>
-          <div class="sun-item"><span class="sun-icon">🌇</span><span class="sun-label">Sunset</span><span class="sun-time">${sunset || '—'}</span></div>`;
+          <div class="sun-item"><span class="sun-icon notranslate">🌇</span><span class="sun-label">Sunset</span><span class="sun-time">${sunset || '—'}</span></div>`;
         wrap.appendChild(sunBar);
       }
 
@@ -1936,7 +1936,7 @@
         <div class="amav-sky-grid">
           ${skyOrder.map(k => `
             <div class="amav-sky-item">
-              <div class="amav-sky-icon">${skyIcons[k]}</div>
+              <div class="amav-sky-icon notranslate">${skyIcons[k]}</div>
               <div class="amav-sky-label">${k}</div>
               <div class="amav-sky-time">${sky[k]}</div>
             </div>`).join('')}
@@ -2099,6 +2099,28 @@
     }
   }
 
+  // Prevent Google Translate from breaking icons
+  function markIconsNotranslate() {
+    const iconSelectors = [
+      '.kaal-icon', '.amav-sky-icon', '.purn-sky-icon',
+      '.sun-icon', '.sign-symbol-display', '.card-sign-emoji',
+      '.love-heart-mid', '.divider-star', '.zcomp-vs',
+      '.amav-sky-icon', '.active-badge', '.lunar-card-title',
+      '.kaal-percent-num', '.love-percent-circle svg',
+      '.zcomp-heart-wrap svg', '.purn-tithi-label',
+      '.amav-tithi-label', '.amav-section-heading',
+      '.purn-section-heading', '.time-arrow'
+    ];
+    iconSelectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        el.classList.add('notranslate');
+      });
+    });
+  }
+
+  // Run on load and after any dynamic content renders
+  window.addEventListener('load', markIconsNotranslate);
+
   // Auto-load on page open
   loadDailyData();
   loadLunar();
@@ -2175,7 +2197,7 @@
             Percentage of love between <strong>${name1}</strong> &amp; <strong>${name2}</strong>
           </div>
           <div class="love-meter-bar-wrap">
-            <div class="love-percent-circle">
+            <div class="love-percent-circle notranslate">
               <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="55" cy="55" r="${r}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
                 <circle cx="55" cy="55" r="${r}" fill="none"
@@ -2277,7 +2299,7 @@
             <span class="zcomp-partner-name">${partners[0].name}</span>
             <span class="zcomp-partner-sign">${partners[0].sign}</span>
           </div>
-          <span class="zcomp-vs">✦</span>
+          <span class="zcomp-vs notranslate">✦</span>
           <div class="zcomp-partner">
             <span class="zcomp-partner-name">${partners[1].name}</span>
             <span class="zcomp-partner-sign">${partners[1].sign}</span>
@@ -2294,7 +2316,7 @@
         <div class="zcomp-result-wrap">
           ${partnersHTML}
           <div class="zcomp-pct-row">
-            <div class="zcomp-heart-wrap">
+            <div class="zcomp-heart-wrap notranslate">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path fill="${heartColor}" opacity="0.25" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                 <path fill="${heartColor}" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" opacity="0.9"/>
@@ -2405,7 +2427,7 @@
         <div class="amav-sky-grid">
           ${skyOrder.map(k => `
             <div class="purn-sky-item">
-              <div class="amav-sky-icon">${skyIcons[k]}</div>
+              <div class="amav-sky-icon notranslate">${skyIcons[k]}</div>
               <div class="purn-sky-label">${k}</div>
               <div class="purn-sky-time">${sky[k]}</div>
             </div>`).join('')}
@@ -2436,8 +2458,8 @@
     }, 'google_translate_element');
   }
 
-  // No-op stub so existing autoTranslateIfKannada calls don't error
-  function autoTranslateIfKannada() {}
+  // Re-mark icons after any section loads (prevents Google Translate breaking them)
+  function autoTranslateIfKannada() { markIconsNotranslate(); }
 
   // Register service worker for PWA
   if ('serviceWorker' in navigator) {
