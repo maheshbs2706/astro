@@ -650,16 +650,7 @@
     background: linear-gradient(90deg, transparent, var(--border-panch), transparent) !important;
   }
 
-  input[type="date"]#panch-date {
-    border-color: var(--border-panch);
-  }
-  input[type="date"]#panch-date:hover,
-  input[type="date"]#panch-date:focus {
-    border-color: var(--accent-panch);
-  }
-  input[type="date"]#panch-date::-webkit-calendar-picker-indicator {
-    filter: invert(0.6) sepia(1) saturate(2) hue-rotate(100deg);
-  }
+
 
   .panch-card {
     background: #0e1a16;
@@ -1334,13 +1325,15 @@
     <div id="google_translate_element"></div>
   </header>
 
-  <!-- Kaal Section -->
+  <!-- Kaal + Panchang Combined Section -->
   <div class="kaal-section" style="margin-top:0;">
     <div class="kaal-header-row">
-      <div class="section-label" style="margin-bottom:0;">Daily kaal timings &middot; Bengaluru</div>
-      <input type="date" id="kaal-date" onchange="loadKaal()" />
+      <div class="section-label" style="margin-bottom:0;">🕐 Kaal &amp; 📅 Panchang &middot; Bengaluru</div>
+      <input type="date" id="kaal-date" onchange="loadDailyData()" />
     </div>
 
+    <!-- Kaal card -->
+    <div class="section-label" style="margin-bottom:0.5rem; margin-top:0.75rem;">Daily Kaal Timings</div>
     <div class="kaal-card">
       <div class="corner blue tl"></div><div class="corner blue tr"></div>
       <div class="corner blue bl"></div><div class="corner blue br"></div>
@@ -1354,17 +1347,9 @@
         <p id="kaal-error-msg">Unable to fetch kaal timings.</p>
       </div>
     </div>
-  </div>
 
-  <!-- Panchang Section -->
-  <div class="panchang-section">
-    <div class="divider panchang-div"><span class="divider-star" style="color:var(--accent-panch)">✦</span></div>
-
-    <div class="kaal-header-row">
-      <div class="section-label" style="margin-bottom:0;">📅 Day Panchang &middot; Bengaluru</div>
-      <input type="date" id="panch-date" onchange="loadPanchang()" />
-    </div>
-
+    <!-- Panchang card -->
+    <div class="section-label" style="margin-bottom:0.5rem; margin-top:1.25rem;">Day Panchang</div>
     <div class="panch-card">
       <div class="corner panch-c tl"></div><div class="corner panch-c tr"></div>
       <div class="corner panch-c bl"></div><div class="corner panch-c br"></div>
@@ -1977,7 +1962,7 @@
                        'july','august','september','october','november','december'];
 
   // Set panchang date input to today
-  document.getElementById('panch-date').value = todayStr;
+  // Set date inputs to today
 
   function buildPanchangUrl(dateVal) {
     const [y, m, d] = dateVal.split('-');
@@ -1985,8 +1970,13 @@
     return `https://www.prokerala.com/astrology/panchang/${y}-${monthName}-${d}.html?loc=1277333`;
   }
 
+  function loadDailyData() {
+    loadKaal();
+    loadPanchang();
+  }
+
   async function loadPanchang() {
-    const dateVal = document.getElementById('panch-date').value;
+    const dateVal = document.getElementById('kaal-date').value;
     if (!dateVal) return;
 
     document.getElementById('panch-content').style.display = 'none';
@@ -2109,9 +2099,8 @@
     }
   }
 
-  // Auto-load panchang, kaal and lunar for today on page open
-  loadPanchang();
-  loadKaal();
+  // Auto-load on page open
+  loadDailyData();
   loadLunar();
   // ── Love Meter ─────────────────────────────
 
