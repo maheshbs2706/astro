@@ -26,6 +26,10 @@
     --select-bg: #111827;
   }
 
+iframe.skiptranslate {
+    display: none !important;
+}
+
   body {
     background: var(--navy);
     color: var(--text);
@@ -2449,17 +2453,32 @@
 
 
   // Google Translate init
-  function googleTranslateElementInit() {
+function googleTranslateElementInit() {
     new google.translate.TranslateElement({
-      pageLanguage: 'en',
-      includedLanguages: 'kn,en',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-      autoDisplay: false
+        pageLanguage: 'en',
+        includedLanguages: 'en,kn',
+        layout: google.translate.TranslateElement.InlineLayout.VERTICAL
     }, 'google_translate_element');
-  }
+}
+  
 
   // Re-mark icons after any section loads (prevents Google Translate breaking them)
-  function autoTranslateIfKannada() { markIconsNotranslate(); }
+  // Also re-trigger Google Translate on newly loaded content
+  function autoTranslateIfKannada() {
+    markIconsNotranslate();
+    // Re-trigger Google Translate on dynamic content
+    retriggerTranslate();
+  }
+
+  function retriggerTranslate() {
+    try {
+      const select = document.querySelector('.goog-te-combo');
+      if (!select || select.value === 'en' || select.value === '') return;
+      const currentLang = select.value;
+      select.value = currentLang;
+      select.dispatchEvent(new Event('change'));
+    } catch(e) {}
+  }
 
   // Register service worker for PWA
   if ('serviceWorker' in navigator) {
