@@ -1418,7 +1418,7 @@ iframe.skiptranslate {
   <!-- Amavasya + Purnima Combined Section -->
   <div class="lunar-section">
     <div class="kaal-header-row">
-      <div class="section-label" style="margin-bottom:0;">🌑 Amavasya &amp; 🌕 Purnima &middot; Bengaluru</div>
+      <div class="section-label" id="lunar-section-title" style="margin-bottom:0;">🌑 Amavasya &amp; 🌕 Purnima &middot; Bengaluru</div>
       <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
         <div class="dropdown-wrapper amav-sel">
           <select id="lunar-month" onchange="loadLunar()">
@@ -1442,7 +1442,7 @@ iframe.skiptranslate {
       <div class="amav-card">
         <div class="corner amav-c tl"></div><div class="corner amav-c tr"></div>
         <div class="corner amav-c bl"></div><div class="corner amav-c br"></div>
-        <div class="lunar-card-title" style="color:var(--accent-amav);">🌑 Amavasya</div>
+        <div class="lunar-card-title" id="amav-card-title" style="color:var(--accent-amav);">🌑 Amavasya</div>
         <div class="loader-wrap" id="amav-loader">
           <div class="loader-ring amav-ring"></div>
           <div class="loader-text">Loading&hellip;</div>
@@ -1457,7 +1457,7 @@ iframe.skiptranslate {
       <div class="purn-card">
         <div class="corner purn-c tl"></div><div class="corner purn-c tr"></div>
         <div class="corner purn-c bl"></div><div class="corner purn-c br"></div>
-        <div class="lunar-card-title" style="color:var(--accent-purn);">🌕 Purnima</div>
+        <div class="lunar-card-title" id="purn-card-title" style="color:var(--accent-purn);">🌕 Purnima</div>
         <div class="loader-wrap" id="purn-loader">
           <div class="loader-ring purn-ring"></div>
           <div class="loader-text">Loading&hellip;</div>
@@ -1837,6 +1837,57 @@ iframe.skiptranslate {
     }
   }
 
+  // ── Translations for Amavasya / Purnima static labels ──
+  const LUNAR_TRANSLATIONS = {
+    en: {
+      sectionTitle     : '🌑 Amavasya & 🌕 Purnima · Bengaluru',
+      amavCardTitle    : '🌑 Amavasya',
+      purnCardTitle    : '🌕 Purnima',
+      amavTithiHeading : 'Amavasya Tithi Timings',
+      tithiStart       : '🌑 Tithi Start',
+      tithiEnd_amav    : '🌒 Tithi End',
+      skyHeading       : 'Sky Timings',
+      sunrise          : 'Sunrise',
+      sunset           : 'Sunset',
+      moonrise         : 'Moonrise',
+      moonset          : 'Moonset',
+      purnTithiHeading : 'Tithi Timings',
+      tithiStart_purn  : '🌕 Tithi Start',
+      tithiEnd_purn    : '🌖 Tithi End',
+    },
+    kn: {
+      sectionTitle     : '🌑 ಅಮಾವಾಸ್ಯೆ & 🌕 ಹುಣ್ಣಿಮೆ · ಬೆಂಗಳೂರು',
+      amavCardTitle    : '🌑 ಅಮಾವಾಸ್ಯೆ',
+      purnCardTitle    : '🌕 ಹುಣ್ಣಿಮೆ',
+      amavTithiHeading : 'ಅಮಾವಾಸ್ಯೆ ತಿಥಿ ಸಮಯಗಳು',
+      tithiStart       : '🌑 ತಿಥಿ ಪ್ರಾರಂಭ',
+      tithiEnd_amav    : '🌒 ತಿಥಿ ಅಂತ್ಯ',
+      skyHeading       : 'ಆಕಾಶ ಸಮಯಗಳು',
+      sunrise          : 'ಸೂರ್ಯೋದಯ',
+      sunset           : 'ಸೂರ್ಯಾಸ್ತ',
+      moonrise         : 'ಚಂದ್ರೋದಯ',
+      moonset          : 'ಚಂದ್ರಾಸ್ತ',
+      purnTithiHeading : 'ತಿಥಿ ಸಮಯಗಳು',
+      tithiStart_purn  : '🌕 ತಿಥಿ ಪ್ರಾರಂಭ',
+      tithiEnd_purn    : '🌖 ತಿಥಿ ಅಂತ್ಯ',
+    }
+  };
+
+  function getCurrentLang() {
+    try {
+      const sel = document.querySelector('.goog-te-combo');
+      if (sel && sel.value && sel.value !== 'en') return sel.value;
+    } catch(e) {}
+    return 'en';
+  }
+
+  function t(key) {
+    const lang = getCurrentLang();
+    return (LUNAR_TRANSLATIONS[lang] || LUNAR_TRANSLATIONS['en'])[key]
+        || LUNAR_TRANSLATIONS['en'][key]
+        || key;
+  }
+
   // ── Lunar (Amavasya + Purnima) ─────────────
 
   // Populate shared year dropdown
@@ -1922,26 +1973,30 @@ iframe.skiptranslate {
       wrap.className = 'fade-in';
 
       // Tithi timings
+      const skyLabelMap = {
+        Sunrise: t('sunrise'), Sunset: t('sunset'),
+        Moonrise: t('moonrise'), Moonset: t('moonset')
+      };
       wrap.innerHTML = `
-        <div class="amav-section-heading">Amavasya Tithi Timings</div>
+        <div class="amav-section-heading notranslate">${t('amavTithiHeading')}</div>
         <div class="amav-tithi-row">
           <div class="amav-tithi-block">
-            <div class="amav-tithi-label">🌑 Tithi Start</div>
+            <div class="amav-tithi-label notranslate">${t('tithiStart')}</div>
             <div class="amav-tithi-time">${tithiStart.time}</div>
             ${tithiStart.date ? `<div class="amav-tithi-date">${tithiStart.date}</div>` : ''}
           </div>
           <div class="amav-tithi-block">
-            <div class="amav-tithi-label">🌒 Tithi End</div>
+            <div class="amav-tithi-label notranslate">${t('tithiEnd_amav')}</div>
             <div class="amav-tithi-time">${tithiEnd.time}</div>
             ${tithiEnd.date ? `<div class="amav-tithi-date">${tithiEnd.date}</div>` : ''}
           </div>
         </div>
-        <div class="amav-section-heading" style="margin-top:1rem;">Sky Timings</div>
+        <div class="amav-section-heading notranslate" style="margin-top:1rem;">${t('skyHeading')}</div>
         <div class="amav-sky-grid">
           ${skyOrder.map(k => `
             <div class="amav-sky-item">
               <div class="amav-sky-icon notranslate">${skyIcons[k]}</div>
-              <div class="amav-sky-label">${k}</div>
+              <div class="amav-sky-label notranslate">${skyLabelMap[k]}</div>
               <div class="amav-sky-time">${sky[k]}</div>
             </div>`).join('')}
         </div>`;
@@ -2413,26 +2468,30 @@ iframe.skiptranslate {
 
       const wrap = document.createElement('div');
       wrap.className = 'fade-in';
+      const purnSkyLabelMap = {
+        Sunrise: t('sunrise'), Sunset: t('sunset'),
+        Moonrise: t('moonrise'), Moonset: t('moonset')
+      };
       wrap.innerHTML = `
-        <div class="purn-section-heading">Tithi Timings</div>
+        <div class="purn-section-heading notranslate">${t('purnTithiHeading')}</div>
         <div class="amav-tithi-row">
           <div class="purn-tithi-block">
-            <div class="purn-tithi-label">🌕 Tithi Start</div>
+            <div class="purn-tithi-label notranslate">${t('tithiStart_purn')}</div>
             <div class="purn-tithi-time">${tithiStart.time}</div>
             ${tithiStart.date ? `<div class="purn-tithi-date">${tithiStart.date}</div>` : ''}
           </div>
           <div class="purn-tithi-block">
-            <div class="purn-tithi-label">🌖 Tithi End</div>
+            <div class="purn-tithi-label notranslate">${t('tithiEnd_purn')}</div>
             <div class="purn-tithi-time">${tithiEnd.time}</div>
             ${tithiEnd.date ? `<div class="purn-tithi-date">${tithiEnd.date}</div>` : ''}
           </div>
         </div>
-        <div class="purn-section-heading" style="margin-top:1rem;">Sky Timings</div>
+        <div class="purn-section-heading notranslate" style="margin-top:1rem;">${t('skyHeading')}</div>
         <div class="amav-sky-grid">
           ${skyOrder.map(k => `
             <div class="purn-sky-item">
               <div class="amav-sky-icon notranslate">${skyIcons[k]}</div>
-              <div class="purn-sky-label">${k}</div>
+              <div class="purn-sky-label notranslate">${purnSkyLabelMap[k]}</div>
               <div class="purn-sky-time">${sky[k]}</div>
             </div>`).join('')}
         </div>`;
@@ -2479,6 +2538,36 @@ function googleTranslateElementInit() {
       select.dispatchEvent(new Event('change'));
     } catch(e) {}
   }
+
+  function updateLunarStaticTitles() {
+    const el1 = document.getElementById('lunar-section-title');
+    const el2 = document.getElementById('amav-card-title');
+    const el3 = document.getElementById('purn-card-title');
+    if (el1) el1.textContent = t('sectionTitle');
+    if (el2) el2.textContent = t('amavCardTitle');
+    if (el3) el3.textContent = t('purnCardTitle');
+  }
+
+  // Re-render Amavasya + Purnima with translated labels when language changes
+  function watchTranslateForLunar() {
+    const interval = setInterval(() => {
+      const sel = document.querySelector('.goog-te-combo');
+      if (!sel) return;
+      clearInterval(interval);
+      let lastLang = sel.value;
+      sel.addEventListener('change', () => {
+        setTimeout(() => {
+          const newLang = document.querySelector('.goog-te-combo')?.value || 'en';
+          if (newLang !== lastLang) {
+            lastLang = newLang;
+            updateLunarStaticTitles();
+            loadLunar();
+          }
+        }, 700);
+      });
+    }, 500);
+  }
+  watchTranslateForLunar();
 
   // Register service worker for PWA
   if ('serviceWorker' in navigator) {
