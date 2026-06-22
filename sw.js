@@ -25,7 +25,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (
     e.request.url.includes('prokerala') ||
-    e.request.url.includes('codetabs') ||
+    e.request.url.includes('corsproxy.io') ||
     e.request.url.includes('translate') ||
     e.request.url.includes('googleapis')
   ) {

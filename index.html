@@ -1652,7 +1652,7 @@ iframe.skiptranslate {
 
   async function fetchHoroscope(sign) {
     const targetUrl = `https://www.prokerala.com/astrology/horoscope/?sign=${sign.key}`;
-    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
     try {
       const res      = await fetch(proxyUrl);
       const htmlText = await res.text();
@@ -1707,8 +1707,8 @@ iframe.skiptranslate {
     document.getElementById('kaal-error').style.display    = 'none';
     document.getElementById('kaal-loader').style.display   = 'block';
 
-    const targetUrl = `https://www.prokerala.com/astrology/rahukalam/?year=${year}&month=${parseInt(month)}&day=${parseInt(day)}&location=Bengaluru%2C+Karnataka%2C+India&loc=1277333&p=1`;
-    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    const targetUrl = `https://www.prokerala.com/astrology/rahukalam/?year=${year}&month=${parseInt(month)}&day=${parseInt(day)}&location=Bengaluru,+Karnataka,+India&loc=1277333&p=1`;
+    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
     try {
       const res      = await fetch(proxyUrl);
@@ -1918,7 +1918,7 @@ iframe.skiptranslate {
     document.getElementById('amav-loader').style.display  = 'block';
 
     const targetUrl = `https://www.prokerala.com/festivals/amavasya.html?date=${dateStr}&festival_pathname=amavasya&mode=festival&loc=1277333`;
-    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2043,7 +2043,7 @@ iframe.skiptranslate {
     document.getElementById('panch-loader').style.display  = 'block';
 
     const targetUrl = buildPanchangUrl(dateVal);
-    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2213,7 +2213,7 @@ iframe.skiptranslate {
     document.getElementById('love-loader').style.display  = 'block';
 
     const targetUrl = `https://www.prokerala.com/entertainment/love-meter/?person1=${encodeURIComponent(name1)}&gender1=${gender1}&person2=${encodeURIComponent(name2)}&gender2=${gender2}&p=1`;
-    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2316,7 +2316,7 @@ iframe.skiptranslate {
     document.getElementById('zcomp-loader').style.display  = 'block';
 
     const targetUrl = `https://www.prokerala.com/astrology/zodiac-compatibility.php?person1=${encodeURIComponent(name1)}&gender1=${gender1}&sign1=${sign1}&person2=${encodeURIComponent(name2)}&gender2=${gender2}&sign2=${sign2}&p=1`;
-    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2409,7 +2409,7 @@ iframe.skiptranslate {
     document.getElementById('purn-loader').style.display  = 'block';
 
     const targetUrl = `https://www.prokerala.com/festivals/purnima.html?date=${dateStr}&festival_pathname=purnima&mode=festival&loc=1277333`;
-    const proxyUrl  = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
     try {
       const res      = await fetch(proxyUrl);
