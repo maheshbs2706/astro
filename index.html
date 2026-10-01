@@ -1908,6 +1908,15 @@ iframe.skiptranslate {
 </div>
 
 <script>
+  // CORS proxy. corsproxy.io now requires an API key, so use our own:
+  //  - localhost: serve.py handles /proxy?url=...
+  //  - production: deploy proxy-worker.js (Cloudflare Worker) and set PROD_PROXY below.
+  const PROD_PROXY = ''; // e.g. 'https://astro-proxy.<you>.workers.dev/'
+  const IS_LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
+  function proxyFor(url) {
+    const base = IS_LOCAL ? '/proxy' : PROD_PROXY;
+    return `${base}?url=${encodeURIComponent(url)}`;
+  }
   function toggleTheme() {
     const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', next);
@@ -1973,7 +1982,7 @@ iframe.skiptranslate {
 
   async function fetchHoroscope(sign) {
     const targetUrl = `https://www.prokerala.com/astrology/horoscope/?sign=${sign.key}`;
-    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = proxyFor(targetUrl);
     try {
       const res      = await fetch(proxyUrl);
       const htmlText = await res.text();
@@ -2029,7 +2038,7 @@ iframe.skiptranslate {
     document.getElementById('kaal-loader').style.display   = 'block';
 
     const targetUrl = `https://www.prokerala.com/astrology/rahukalam/?year=${year}&month=${parseInt(month)}&day=${parseInt(day)}&location=Bengaluru,+Karnataka,+India&loc=1277333&p=1`;
-    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = proxyFor(targetUrl);
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2239,7 +2248,7 @@ iframe.skiptranslate {
     document.getElementById('amav-loader').style.display  = 'block';
 
     const targetUrl = `https://www.prokerala.com/festivals/amavasya.html?date=${dateStr}&festival_pathname=amavasya&mode=festival&loc=1277333`;
-    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = proxyFor(targetUrl);
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2364,7 +2373,7 @@ iframe.skiptranslate {
     document.getElementById('panch-loader').style.display  = 'block';
 
     const targetUrl = buildPanchangUrl(dateVal);
-    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = proxyFor(targetUrl);
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2534,7 +2543,7 @@ iframe.skiptranslate {
     document.getElementById('love-loader').style.display  = 'block';
 
     const targetUrl = `https://www.prokerala.com/entertainment/love-meter/?person1=${encodeURIComponent(name1)}&gender1=${gender1}&person2=${encodeURIComponent(name2)}&gender2=${gender2}&p=1`;
-    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = proxyFor(targetUrl);
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2637,7 +2646,7 @@ iframe.skiptranslate {
     document.getElementById('zcomp-loader').style.display  = 'block';
 
     const targetUrl = `https://www.prokerala.com/astrology/zodiac-compatibility.php?person1=${encodeURIComponent(name1)}&gender1=${gender1}&sign1=${sign1}&person2=${encodeURIComponent(name2)}&gender2=${gender2}&sign2=${sign2}&p=1`;
-    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = proxyFor(targetUrl);
 
     try {
       const res      = await fetch(proxyUrl);
@@ -2730,7 +2739,7 @@ iframe.skiptranslate {
     document.getElementById('purn-loader').style.display  = 'block';
 
     const targetUrl = `https://www.prokerala.com/festivals/purnima.html?date=${dateStr}&festival_pathname=purnima&mode=festival&loc=1277333`;
-    const proxyUrl  = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const proxyUrl  = proxyFor(targetUrl);
 
     try {
       const res      = await fetch(proxyUrl);

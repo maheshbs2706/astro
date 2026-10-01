@@ -10,7 +10,7 @@ echo.
 where python >nul 2>&1
 if %errorlevel% == 0 (
     start "" "%URL%"
-    python -m http.server %PORT%
+    python serve.py %PORT%
     goto :eof
 )
 
@@ -18,7 +18,7 @@ if %errorlevel% == 0 (
 where py >nul 2>&1
 if %errorlevel% == 0 (
     start "" "%URL%"
-    py -m http.server %PORT%
+    py serve.py %PORT%
     goto :eof
 )
 
