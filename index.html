@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kalaya Tasmai Namah</title>
-<link rel="manifest" href="/astro/manifest.json">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#c9a96e">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1909,12 +1909,11 @@ iframe.skiptranslate {
 
 <script>
   // CORS proxy. corsproxy.io now requires an API key, so use our own:
-  //  - localhost: serve.py handles /proxy?url=...
-  //  - production: deploy proxy-worker.js (Cloudflare Worker) and set PROD_PROXY below.
-  const PROD_PROXY = ''; // e.g. 'https://astro-proxy.<you>.workers.dev/'
+  //  - localhost: serve.py handles /proxy
+  //  - production (Vercel): api/proxy.js handles /api/proxy
   const IS_LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
   function proxyFor(url) {
-    const base = IS_LOCAL ? '/proxy' : PROD_PROXY;
+    const base = IS_LOCAL ? '/proxy' : '/api/proxy';
     return `${base}?url=${encodeURIComponent(url)}`;
   }
   function toggleTheme() {
@@ -3239,7 +3238,7 @@ function googleTranslateElementInit() {
   // Register service worker for PWA
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/astro/sw.js', { scope: '/astro/' })
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
         .then(r => console.log('SW registered', r.scope))
         .catch(e => console.log('SW error', e));
     });

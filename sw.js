@@ -1,9 +1,9 @@
-const CACHE = 'kalaya-v1';
+const CACHE = 'kalaya-v2';
 const ASSETS = [
-  '/astro/index.html',
-  '/astro/manifest.json',
-  '/astro/icon-192.png',
-  '/astro/icon-512.png'
+  '/index.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 self.addEventListener('install', e => {
